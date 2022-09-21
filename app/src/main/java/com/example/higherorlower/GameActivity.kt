@@ -1,6 +1,6 @@
 package com.example.higherorlower
 
-import android.media.Image
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -9,22 +9,24 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import kotlinx.coroutines.*
-import java.lang.Runnable
 
 class GameActivity : AppCompatActivity() {
     lateinit var imageViewOldCard: ImageView
     lateinit var imageViewSecretCard: ImageView
     lateinit var pointTextView: TextView
+    lateinit var highscoreTextView: TextView
     var image = R.drawable.heartace
-    var oldCardValue = 1 // Första bild är alltid ess.
+    var oldCardValue = 1 // Första bild är alltid ess. Undersöka hur ändra på det
     var secretCardValue = 0
     var point = 0
+    var highscore = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
         pointTextView = findViewById(R.id.pointTextView)
+        highscoreTextView = findViewById(R.id.highscoreTextView)
         imageViewOldCard = findViewById(R.id.imageViewOldCard)
         imageViewSecretCard = findViewById(R.id.imageViewSecretCard)
         val lowerButton = findViewById<Button>(R.id.lowerButton)
@@ -38,19 +40,28 @@ class GameActivity : AppCompatActivity() {
 
         }
     }
-    fun handleHigherButtonPress () {
+
+    override fun onRestart() {
+        super.onRestart()
+        point = 0
+        pointTextView.text = "Poäng: $point"
+    }
+
+    fun handleHigherButtonPress() {
         showSecretCard()
-        checkGuessHigher()
+        val guessHigher = checkGuessHigher()
+        checkIncreaseScore(guessHigher)
         changeCards()
     }
 
-    fun handleLowerButtonPress () {
+    fun handleLowerButtonPress() {
         showSecretCard()
-        checkGuessLower()
+        val guessLower = checkGuessLower()
+        checkIncreaseScore(guessLower)
         changeCards()
     }
 
-    fun showSecretCard () {
+    fun showSecretCard() {
         val randomNumber = (1..52).random()
         when (randomNumber) {
             1 -> {
@@ -265,41 +276,44 @@ class GameActivity : AppCompatActivity() {
         imageViewSecretCard.setImageResource(image)
     }
 
-    fun changeCards () {
-        Handler(Looper.getMainLooper()).postDelayed( {
+    fun changeCards() {
+        Handler(Looper.getMainLooper()).postDelayed({
             imageViewSecretCard.setImageResource(R.drawable.cardback)
             imageViewOldCard.setImageResource(image)
             oldCardValue = secretCardValue
-        }, 3000)
+        }, 2000)
     }
 
-    fun checkGuessHigher () {
-        if (secretCardValue > oldCardValue) {
+    fun checkGuessHigher(): Boolean {
+        return secretCardValue > oldCardValue
+    }
+
+    fun checkGuessLower(): Boolean {
+        return secretCardValue < oldCardValue
+    }
+
+    fun wrongGuess() {
+        val intent = Intent(this, ResultActivity::class.java)
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (point > highscore) {
+                highscore = point
+                highscoreTextView.text = "Rekord: $highscore"
+            }
+            startActivity(intent)
+        }, 1500)
+    }
+
+    fun checkIncreaseScore(correctGuess: Boolean) {
+        if (correctGuess) {
             point++
-            pointTextView.text = "Poäng: $point"
-        }
-        else {
-            Log.d("!!!", "Fel gissning")
-        }
-    }
-
-    fun checkGuessLower () {
-        if (secretCardValue < oldCardValue) {
-            point++
-            pointTextView.text = "Poäng: $point"
-        }
-        else {
-            Log.d("!!!", "Fel gissning")
+            pointTextView.text = ("Poäng: $point")
+        } else {
+            wrongGuess()
+//            Handler(Looper.getMainLooper()).postDelayed({
+//                startActivity(intent)
+//
+//            }, 2000)
         }
     }
-
-//    fun increaseScore () {
-//        val guessLower = checkGuessLower()
-//        val guessHigher = checkGuessHigher()
-//        if (guessLower || guessHigher) {
-//            point++
-//            pointTextView.text = ("Poäng: $point")
-//        }
-//    }
 }
 
