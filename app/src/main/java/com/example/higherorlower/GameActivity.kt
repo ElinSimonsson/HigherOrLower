@@ -4,34 +4,37 @@ import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import kotlinx.coroutines.*
 import java.lang.Runnable
 
 class GameActivity : AppCompatActivity() {
     lateinit var imageViewOldCard: ImageView
     lateinit var imageViewSecretCard: ImageView
+    lateinit var pointTextView: TextView
     var image = R.drawable.heartace
     var oldCardValue = 1 // Första bild är alltid ess.
     var secretCardValue = 0
+    var point = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
+        pointTextView = findViewById(R.id.pointTextView)
         imageViewOldCard = findViewById(R.id.imageViewOldCard)
         imageViewSecretCard = findViewById(R.id.imageViewSecretCard)
         val lowerButton = findViewById<Button>(R.id.lowerButton)
         val higherButton = findViewById<Button>(R.id.higherButton)
 
         higherButton.setOnClickListener {
-            //Log.d("!!!", "Du tryckte på högre!")
             handleHigherButtonPress()
         }
         lowerButton.setOnClickListener {
-            Log.d("!!!", "Du tryckte på lägre!")
-            handleButtonPress()
+            handleLowerButtonPress()
 
         }
     }
@@ -41,12 +44,14 @@ class GameActivity : AppCompatActivity() {
         changeCards()
     }
 
-    fun handleButtonPress () {
+    fun handleLowerButtonPress () {
+        showSecretCard()
+        checkGuessLower()
         changeCards()
     }
 
     fun showSecretCard () {
-        val randomNumber = (1..13).random()
+        val randomNumber = (1..52).random()
         when (randomNumber) {
             1 -> {
                 image = R.drawable.heartace
@@ -261,26 +266,40 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun changeCards () {
-        val handler = Handler()
-        handler.postDelayed( {
+        Handler(Looper.getMainLooper()).postDelayed( {
             imageViewSecretCard.setImageResource(R.drawable.cardback)
             imageViewOldCard.setImageResource(image)
             oldCardValue = secretCardValue
         }, 3000)
     }
 
-    // Kontrollerar om jämförelse mellan två variabler funkar som jag tänkt mig,
-    // ska utveckla den här funktionen ytterligare.
     fun checkGuessHigher () {
-        if(secretCardValue > oldCardValue) {
-            Log.d("!!!", "$secretCardValue är högre än $oldCardValue")
-        }
-        else if (secretCardValue == oldCardValue) {
-            Log.d("!!!", "$secretCardValue är lika mycket som $oldCardValue")
+        if (secretCardValue > oldCardValue) {
+            point++
+            pointTextView.text = "Poäng: $point"
         }
         else {
-            Log.d("!!!", "$secretCardValue är lägre än $oldCardValue")
+            Log.d("!!!", "Fel gissning")
         }
     }
+
+    fun checkGuessLower () {
+        if (secretCardValue < oldCardValue) {
+            point++
+            pointTextView.text = "Poäng: $point"
+        }
+        else {
+            Log.d("!!!", "Fel gissning")
+        }
+    }
+
+//    fun increaseScore () {
+//        val guessLower = checkGuessLower()
+//        val guessHigher = checkGuessHigher()
+//        if (guessLower || guessHigher) {
+//            point++
+//            pointTextView.text = ("Poäng: $point")
+//        }
+//    }
 }
 
