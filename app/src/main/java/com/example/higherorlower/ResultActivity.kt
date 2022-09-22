@@ -5,23 +5,26 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 
 class ResultActivity : AppCompatActivity() {
+    lateinit var resultTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
+        resultTextView = findViewById(R.id.resultTextView)
 
-//        val point = intent.getIntExtra("point", 0)
-//        val previousHighScore = intent.getIntExtra("highscore", 0)
-
-        var point = getPoint()
-        var highscore = getPreviousHighscore()
-        if (point == highscore){
-            Log.d("!!!", "Grattis! Du satte rekordet på $highscore")
+        val point = getPoint()
+        val highScore = getPreviousHighscore()
+        if (point == highScore){
+            resultTextView.text = getString(R.string.result_textview, "Grattis! Du satte det nya rekordet på $highScore!")
+            Log.d("!!!", "Grattis! Du satte rekordet på $highScore")
         }
         else {
-            Log.d("!!!", "Tyvärr räckte det inte. Rekord: $highscore, du lyckades få $point poäng")
+            resultTextView.text = getString(R.string.result_textview,"Tyvärr räckte inte din poäng $point för att slå" +
+                    "rekordet $highScore")
+            Log.d("!!!", "Tyvärr räckte det inte. Rekord: $highScore, du lyckades få $point poäng")
         }
     }
 

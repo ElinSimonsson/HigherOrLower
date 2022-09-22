@@ -12,28 +12,33 @@ import android.widget.ImageView
 import android.widget.TextView
 
 class GameActivity : AppCompatActivity() {
-    lateinit var imageViewOldCard: ImageView
-    lateinit var imageViewSecretCard: ImageView
+    lateinit var imageViewPreviousCard: ImageView
+    lateinit var imageViewCurrentCard: ImageView
     lateinit var pointTextView: TextView
-    var image = R.drawable.heartace
-    var oldCardValue = 0
-    var secretCardValue = 0
+    var previousCard = Card(R.drawable.diamondsace,1)
+    var currentCard = Card(R.drawable.heartace, 1)
     var point = 0
     var highscore: Int? = null
+    var deck = mutableListOf<Card>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
         pointTextView = findViewById(R.id.pointTextView)
-        imageViewOldCard = findViewById(R.id.imageViewOldCard)
-        imageViewSecretCard = findViewById(R.id.imageViewSecretCard)
+        imageViewCurrentCard = findViewById(R.id.imageViewSecretCard)
+        imageViewPreviousCard = findViewById(R.id.imageViewOldCard)
+
         val lowerButton = findViewById<Button>(R.id.lowerButton)
         val higherButton = findViewById<Button>(R.id.higherButton)
+        createDeck()
 
         pointTextView.text = getString(R.string.point_textview, point)
-        generateRandomOldCard()
-        highscore = 0
+        randomPreviousCard()
+
+        highscore = intent.getIntExtra("highscore", 0)
+        Log.d("!!!", "onCreate körs! rekord är $highscore")
 
         higherButton.setOnClickListener {
             handleHigherButtonPress()
@@ -41,7 +46,13 @@ class GameActivity : AppCompatActivity() {
         lowerButton.setOnClickListener {
             handleLowerButtonPress()
         }
+        val imageButton = findViewById<ImageButton>(R.id.imageButton).setOnClickListener {
+
+            finish()
+        }
     }
+
+
 
     override fun onRestart() {
         super.onRestart()
@@ -49,308 +60,159 @@ class GameActivity : AppCompatActivity() {
         pointTextView.text = getString(R.string.point_textview,0)
     }
 
+
+    fun createDeck () {
+        val card1 = Card(R.drawable.heartace, 1)
+        val card2 = Card(R.drawable.heart2, 2)
+        val card3 = Card(R.drawable.heart3, 3)
+        val card4 = Card(R.drawable.heart4, 4)
+        val card5 = Card(R.drawable.heart5, 5)
+        val card6 = Card(R.drawable.heart6, 6)
+        val card7 = Card(R.drawable.heart7, 7)
+        val card8 = Card(R.drawable.heart8, 8)
+        val card9 = Card(R.drawable.heart9, 9)
+        val card10 = Card(R.drawable.heart10, 10)
+        val card11 = Card(R.drawable.heartj, 11)
+        val card12 = Card(R.drawable.heartq, 12)
+        val card13 = Card(R.drawable.heartk, 13)
+        val card14 = Card(R.drawable.clubace, 1)
+        val card15 = Card(R.drawable.club2, 2)
+        val card16 = Card(R.drawable.club3, 3)
+        val card17 = Card(R.drawable.club4, 4)
+        val card18 = Card(R.drawable.club5, 5)
+        val card19 = Card(R.drawable.club6, 6)
+        val card20 = Card(R.drawable.club7, 7)
+        val card21 = Card(R.drawable.club8, 8)
+        val card22 = Card(R.drawable.club9, 9)
+        val card23 = Card(R.drawable.club10, 10)
+        val card24 = Card(R.drawable.clubj, 11)
+        val card25 = Card(R.drawable.clubq, 12)
+        val card26 = Card(R.drawable.clubk, 13)
+        val card27 = Card(R.drawable.spadesace, 1)
+        val card28 = Card(R.drawable.spades2, 2)
+        val card29 = Card(R.drawable.spades3, 3)
+        val card30 = Card(R.drawable.spades4, 4)
+        val card31 = Card(R.drawable.spades5, 5)
+        val card32 = Card(R.drawable.spades6, 6)
+        val card33 = Card(R.drawable.spades7, 7)
+        val card34 = Card(R.drawable.spades8, 8)
+        val card35 = Card(R.drawable.spades9, 9)
+        val card36 = Card(R.drawable.spades10, 10)
+        val card37 = Card(R.drawable.spadesj, 11)
+        val card38 = Card(R.drawable.spadesq, 12)
+        val card39 = Card(R.drawable.spadesk, 13)
+        val card40 = Card(R.drawable.diamondsace, 1)
+        val card41 = Card(R.drawable.diamonds2, 2)
+        val card42 = Card(R.drawable.diamonds3, 3)
+        val card43 = Card(R.drawable.diamonds4, 4)
+        val card44 = Card(R.drawable.diamonds5, 5)
+        val card45 = Card(R.drawable.diamonds6, 6)
+        val card46 = Card(R.drawable.diamonds7, 7)
+        val card47 = Card(R.drawable.diamonds8, 8)
+        val card48 = Card(R.drawable.diamonds9, 9)
+        val card49 = Card(R.drawable.diamonds10, 10)
+        val card50 = Card(R.drawable.diamondsj, 11)
+        val card51 = Card(R.drawable.diamondsq, 12)
+        val card52 = Card(R.drawable.diamondsk,13)
+        deck.add(card1)
+        deck.add(card2)
+        deck.add(card3)
+        deck.add(card4)
+        deck.add(card5)
+        deck.add(card6)
+        deck.add(card7)
+        deck.add(card8)
+        deck.add(card9)
+        deck.add(card10)
+        deck.add(card11)
+        deck.add(card12)
+        deck.add(card13)
+        deck.add(card14)
+        deck.add(card15)
+        deck.add(card16)
+        deck.add(card17)
+        deck.add(card18)
+        deck.add(card19)
+        deck.add(card20)
+        deck.add(card21)
+        deck.add(card22)
+        deck.add(card23)
+        deck.add(card24)
+        deck.add(card25)
+        deck.add(card26)
+        deck.add(card27)
+        deck.add(card28)
+        deck.add(card29)
+        deck.add(card30)
+        deck.add(card31)
+        deck.add(card32)
+        deck.add(card33)
+        deck.add(card34)
+        deck.add(card35)
+        deck.add(card36)
+        deck.add(card37)
+        deck.add(card38)
+        deck.add(card39)
+        deck.add(card40)
+        deck.add(card41)
+        deck.add(card42)
+        deck.add(card43)
+        deck.add(card44)
+        deck.add(card45)
+        deck.add(card46)
+        deck.add(card47)
+        deck.add(card48)
+        deck.add(card49)
+        deck.add(card50)
+        deck.add(card51)
+        deck.add(card52)
+    }
+
     fun handleHigherButtonPress() {
-        showSecretCard()
-        val guessHigher = checkGuessHigher()
-        checkIncreaseScore(guessHigher)
-        changeCards()
+        randomCurrentCard()
+        val userGuessHigher = checkGuessHigher()
+        checkIncreaseScore(userGuessHigher)
+        changeCurrentCardToPrevious()
+
     }
 
     fun handleLowerButtonPress() {
-        showSecretCard()
-        val guessLower = checkGuessLower()
-        checkIncreaseScore(guessLower)
-        changeCards()
+        randomCurrentCard()
+        val userGuessLower = checkGuessLower()
+        checkIncreaseScore(userGuessLower)
+        changeCurrentCardToPrevious()
     }
 
-    fun generateRandomOldCard() {
-        val number = (1..13).random()
-        when (number) {
-            1 -> {
-                image = R.drawable.heartace
-                oldCardValue = 1
-            }
-            2 -> {
-                image = R.drawable.heart2
-                oldCardValue = 2
-            }
-            3 -> {
-                image = R.drawable.heart3
-                oldCardValue = 3
-            }
-            4 -> {
-                image = R.drawable.heart4
-                oldCardValue = 4
-            }
-            5 -> {
-                image = R.drawable.heart5
-                oldCardValue = 5
-            }
-            6 -> {
-                image = R.drawable.heart6
-                oldCardValue = 6
-            }
-            7 -> {
-                image = R.drawable.heart7
-                oldCardValue = 7
-            }
-            8 -> {
-                image = R.drawable.heart8
-                oldCardValue = 8
-            }
-            9 -> {
-                image = R.drawable.heart9
-                oldCardValue = 9
-            }
-            10 -> {
-                image = R.drawable.heart10
-                oldCardValue = 10
-            }
-            11 -> {
-                image = R.drawable.heartj
-                oldCardValue = 11
-            }
-            12 -> {
-                image = R.drawable.heartq
-                oldCardValue = 12
-            }
-            13 -> {
-                image = R.drawable.heartk
-                oldCardValue = 13
-            }
+    fun randomPreviousCard() {
+        deck.shuffle()
+        previousCard = deck[10]
+        imageViewPreviousCard.setImageResource(previousCard.image)
+    }
+    fun randomCurrentCard () {
+        deck.shuffle()
+        currentCard = deck [20]
+        while(currentCard.value == previousCard.value) {
+            //if (currentCard.value == previousCard.value) { // funkar inte att undvika lika värde mellan två kort. Undersöka detta
+                deck.shuffle()
+                currentCard = deck[25]
         }
-        imageViewOldCard.setImageResource(image)
+        imageViewCurrentCard.setImageResource(currentCard.image)
     }
 
-    fun showSecretCard() {
-        val randomNumber = (1..52).random()
-        when (randomNumber) {
-            1 -> {
-                image = R.drawable.heartace
-                secretCardValue = 1
-            }
-            2 -> {
-                image = R.drawable.heart2
-                secretCardValue = 2
-            }
-            3 -> {
-                image = R.drawable.heart3
-                secretCardValue = 3
-            }
-            4 -> {
-                image = R.drawable.heart4
-                secretCardValue = 4
-            }
-            5 -> {
-                image = R.drawable.heart5
-                secretCardValue = 5
-            }
-            6 -> {
-                image = R.drawable.heart6
-                secretCardValue = 6
-            }
-            7 -> {
-                image = R.drawable.heart7
-                secretCardValue = 7
-            }
-            8 -> {
-                image = R.drawable.heart8
-                secretCardValue = 8
-            }
-            9 -> {
-                image = R.drawable.heart9
-                secretCardValue = 9
-            }
-            10 -> {
-                image = R.drawable.heart10
-                secretCardValue = 10
-            }
-            11 -> {
-                image = R.drawable.heartj
-                secretCardValue = 11
-            }
-            12 -> {
-                image = R.drawable.heartq
-                secretCardValue = 12
-            }
-            13 -> {
-                image = R.drawable.heartk
-                secretCardValue = 13
-            }
-            14 -> {
-                image = R.drawable.clubace
-                secretCardValue = 1
-            }
-            15 -> {
-                image = R.drawable.club2
-                secretCardValue = 2
-            }
-            16 -> {
-                image = R.drawable.club3
-                secretCardValue = 3
-            }
-            17 -> {
-                image = R.drawable.club4
-                secretCardValue = 4
-            }
-            18 -> {
-                image = R.drawable.club5
-                secretCardValue = 5
-            }
-            19 -> {
-                image = R.drawable.club6
-                secretCardValue = 6
-            }
-            20 -> {
-                image = R.drawable.club7
-                secretCardValue = 7
-            }
-            21 -> {
-                image = R.drawable.club8
-                secretCardValue = 8
-            }
-            22 -> {
-                image = R.drawable.club9
-                secretCardValue = 9
-            }
-            23 -> {
-                image = R.drawable.club10
-                secretCardValue = 10
-            }
-            24 -> {
-                image = R.drawable.clubj
-                secretCardValue = 11
-            }
-            25 -> {
-                image = R.drawable.clubq
-                secretCardValue = 12
-            }
-            26 -> {
-                image = R.drawable.clubk
-                secretCardValue = 13
-            }
-            27 -> {
-                image = R.drawable.diamondsace
-                secretCardValue = 1
-            }
-            28 -> {
-                image = R.drawable.diamonds2
-                secretCardValue = 2
-            }
-            29 -> {
-                image = R.drawable.diamonds3
-                secretCardValue = 3
-            }
-            30 -> {
-                image = R.drawable.diamonds4
-                secretCardValue = 4
-            }
-            31 -> {
-                image = R.drawable.diamonds5
-                secretCardValue = 5
-            }
-            32 -> {
-                image = R.drawable.diamonds6
-                secretCardValue = 6
-            }
-            33 -> {
-                image = R.drawable.diamonds7
-                secretCardValue = 7
-            }
-            34 -> {
-                image = R.drawable.diamonds8
-                secretCardValue = 8
-            }
-            35 -> {
-                image = R.drawable.diamonds9
-                secretCardValue = 9
-            }
-            36 -> {
-                image = R.drawable.diamonds10
-                secretCardValue = 10
-            }
-            37 -> {
-                image = R.drawable.diamondsj
-                secretCardValue = 11
-            }
-            38 -> {
-                image = R.drawable.diamondsq
-                secretCardValue = 12
-            }
-            39 -> {
-                image = R.drawable.diamondsk
-                secretCardValue = 13
-            }
-            40 -> {
-                image = R.drawable.spadesace
-                secretCardValue = 1
-            }
-            41 -> {
-                image = R.drawable.spades2
-                secretCardValue = 2
-            }
-            42 -> {
-                image = R.drawable.spades3
-                secretCardValue = 3
-            }
-            43 -> {
-                image = R.drawable.spades4
-                secretCardValue = 4
-            }
-            44 -> {
-                image = R.drawable.spades5
-                secretCardValue = 5
-            }
-            45 -> {
-                image = R.drawable.spades6
-                secretCardValue = 6
-            }
-            46 -> {
-                image = R.drawable.spades7
-                secretCardValue = 7
-            }
-            47 -> {
-                image = R.drawable.spades8
-                secretCardValue = 8
-            }
-            48 -> {
-                image = R.drawable.spades9
-                secretCardValue = 9
-            }
-            49 -> {
-                image = R.drawable.spades10
-                secretCardValue = 10
-            }
-            50 -> {
-                image = R.drawable.spadesj
-                secretCardValue = 11
-            }
-            51 -> {
-                image = R.drawable.spadesq
-                secretCardValue = 12
-            }
-            52 -> {
-                image = R.drawable.spadesk
-                secretCardValue = 13
-            }
-        }
-        imageViewSecretCard.setImageResource(image)
-    }
-
-    fun changeCards() {
+    fun changeCurrentCardToPrevious() {
         Handler(Looper.getMainLooper()).postDelayed({
-            imageViewSecretCard.setImageResource(R.drawable.cardback)
-            imageViewOldCard.setImageResource(image)
-            oldCardValue = secretCardValue
+            imageViewCurrentCard.setImageResource(R.drawable.cardback)
+            previousCard = currentCard
+            imageViewPreviousCard.setImageResource(previousCard.image)
         }, 2000)
     }
 
     fun checkGuessHigher(): Boolean {
-        return secretCardValue > oldCardValue
+        return currentCard.value > previousCard.value
     }
 
     fun checkGuessLower(): Boolean {
-        return secretCardValue < oldCardValue
+        return currentCard.value < previousCard.value
     }
 
     fun wrongGuess() {

@@ -5,4 +5,5 @@
     <string name= "button_lower">Lower</string>
     <string name= "point_textview">Point: %1$d</string>
     <string name= "gameover_textview">Gameover!</string>
+    <string name= "result_textview">%1$s</string>
 </resources>
