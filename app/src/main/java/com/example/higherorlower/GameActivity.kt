@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 
@@ -14,37 +15,38 @@ class GameActivity : AppCompatActivity() {
     lateinit var imageViewOldCard: ImageView
     lateinit var imageViewSecretCard: ImageView
     lateinit var pointTextView: TextView
-    lateinit var highscoreTextView: TextView
     var image = R.drawable.heartace
-    var oldCardValue = 1 // Första bild är alltid ess. Undersöka hur ändra på det
+    var oldCardValue = 0
     var secretCardValue = 0
     var point = 0
-    var highscore = 0
+    var highscore: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
         pointTextView = findViewById(R.id.pointTextView)
-        highscoreTextView = findViewById(R.id.highscoreTextView)
         imageViewOldCard = findViewById(R.id.imageViewOldCard)
         imageViewSecretCard = findViewById(R.id.imageViewSecretCard)
         val lowerButton = findViewById<Button>(R.id.lowerButton)
         val higherButton = findViewById<Button>(R.id.higherButton)
+
+        pointTextView.text = getString(R.string.point_textview, point)
+        generateRandomOldCard()
+        highscore = 0
 
         higherButton.setOnClickListener {
             handleHigherButtonPress()
         }
         lowerButton.setOnClickListener {
             handleLowerButtonPress()
-
         }
     }
 
     override fun onRestart() {
         super.onRestart()
         point = 0
-        pointTextView.text = "Poäng: $point"
+        pointTextView.text = getString(R.string.point_textview,0)
     }
 
     fun handleHigherButtonPress() {
@@ -59,6 +61,65 @@ class GameActivity : AppCompatActivity() {
         val guessLower = checkGuessLower()
         checkIncreaseScore(guessLower)
         changeCards()
+    }
+
+    fun generateRandomOldCard() {
+        val number = (1..13).random()
+        when (number) {
+            1 -> {
+                image = R.drawable.heartace
+                oldCardValue = 1
+            }
+            2 -> {
+                image = R.drawable.heart2
+                oldCardValue = 2
+            }
+            3 -> {
+                image = R.drawable.heart3
+                oldCardValue = 3
+            }
+            4 -> {
+                image = R.drawable.heart4
+                oldCardValue = 4
+            }
+            5 -> {
+                image = R.drawable.heart5
+                oldCardValue = 5
+            }
+            6 -> {
+                image = R.drawable.heart6
+                oldCardValue = 6
+            }
+            7 -> {
+                image = R.drawable.heart7
+                oldCardValue = 7
+            }
+            8 -> {
+                image = R.drawable.heart8
+                oldCardValue = 8
+            }
+            9 -> {
+                image = R.drawable.heart9
+                oldCardValue = 9
+            }
+            10 -> {
+                image = R.drawable.heart10
+                oldCardValue = 10
+            }
+            11 -> {
+                image = R.drawable.heartj
+                oldCardValue = 11
+            }
+            12 -> {
+                image = R.drawable.heartq
+                oldCardValue = 12
+            }
+            13 -> {
+                image = R.drawable.heartk
+                oldCardValue = 13
+            }
+        }
+        imageViewOldCard.setImageResource(image)
     }
 
     fun showSecretCard() {
@@ -295,10 +356,11 @@ class GameActivity : AppCompatActivity() {
     fun wrongGuess() {
         val intent = Intent(this, ResultActivity::class.java)
         Handler(Looper.getMainLooper()).postDelayed({
-            if (point > highscore) {
+            if (point > highscore!!) {
                 highscore = point
-                highscoreTextView.text = "Rekord: $highscore"
             }
+            intent.putExtra("highscore", highscore)
+            intent.putExtra("point", point)
             startActivity(intent)
         }, 1500)
     }
@@ -306,13 +368,10 @@ class GameActivity : AppCompatActivity() {
     fun checkIncreaseScore(correctGuess: Boolean) {
         if (correctGuess) {
             point++
-            pointTextView.text = ("Poäng: $point")
+            pointTextView.text = getString(R.string.point_textview, point)
+
         } else {
             wrongGuess()
-//            Handler(Looper.getMainLooper()).postDelayed({
-//                startActivity(intent)
-//
-//            }, 2000)
         }
     }
 }
