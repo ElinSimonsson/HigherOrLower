@@ -4,6 +4,8 @@
     <string name= "button_higher">Higher</string>
     <string name= "button_lower">Lower</string>
     <string name= "point_textview">Point: %1$d</string>
-    <string name= "gameover_textview">Gameover!</string>
-    <string name= "result_textview">%1$s</string>
+    <string name= "gameover_textview">Game over!</string>
+    <string name= "resultScore_textview">Score: %1$d</string>
+    <string name= "highscore_textview">High score: %1$d</string>
+    <string name= "highScoreBroken_textView">%1$s</string>
 </resources>

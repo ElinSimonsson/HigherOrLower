@@ -1,6 +1,8 @@
 package com.example.higherorlower
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -15,12 +17,11 @@ class GameActivity : AppCompatActivity() {
     lateinit var imageViewPreviousCard: ImageView
     lateinit var imageViewCurrentCard: ImageView
     lateinit var pointTextView: TextView
-    var previousCard = Card(R.drawable.diamondsace,1)
-    var currentCard = Card(R.drawable.heartace, 1)
     var point = 0
-    var highscore: Int? = null
+    var highscore = 0
     var deck = mutableListOf<Card>()
-
+    var previousCard = Card(R.drawable.diamondsace, 1)
+    var currentCard = Card(R.drawable.heartace, 1)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,16 +30,12 @@ class GameActivity : AppCompatActivity() {
         pointTextView = findViewById(R.id.pointTextView)
         imageViewCurrentCard = findViewById(R.id.imageViewSecretCard)
         imageViewPreviousCard = findViewById(R.id.imageViewOldCard)
-
         val lowerButton = findViewById<Button>(R.id.lowerButton)
         val higherButton = findViewById<Button>(R.id.higherButton)
         createDeck()
 
         pointTextView.text = getString(R.string.point_textview, point)
         randomPreviousCard()
-
-        highscore = intent.getIntExtra("highscore", 0)
-        Log.d("!!!", "onCreate körs! rekord är $highscore")
 
         higherButton.setOnClickListener {
             handleHigherButtonPress()
@@ -47,21 +44,17 @@ class GameActivity : AppCompatActivity() {
             handleLowerButtonPress()
         }
         val imageButton = findViewById<ImageButton>(R.id.imageButton).setOnClickListener {
-
             finish()
         }
     }
 
-
-
     override fun onRestart() {
         super.onRestart()
         point = 0
-        pointTextView.text = getString(R.string.point_textview,0)
+        pointTextView.text = getString(R.string.point_textview, 0)
     }
 
-
-    fun createDeck () {
+    fun createDeck() {
         val card1 = Card(R.drawable.heartace, 1)
         val card2 = Card(R.drawable.heart2, 2)
         val card3 = Card(R.drawable.heart3, 3)
@@ -113,7 +106,7 @@ class GameActivity : AppCompatActivity() {
         val card49 = Card(R.drawable.diamonds10, 10)
         val card50 = Card(R.drawable.diamondsj, 11)
         val card51 = Card(R.drawable.diamondsq, 12)
-        val card52 = Card(R.drawable.diamondsk,13)
+        val card52 = Card(R.drawable.diamondsk, 13)
         deck.add(card1)
         deck.add(card2)
         deck.add(card3)
@@ -170,16 +163,15 @@ class GameActivity : AppCompatActivity() {
 
     fun handleHigherButtonPress() {
         randomCurrentCard()
-        val userGuessHigher = checkGuessHigher()
-        checkIncreaseScore(userGuessHigher)
+        val checkGuess = checkGuessHigher()
+        checkCorrectGuess(checkGuess)
         changeCurrentCardToPrevious()
-
     }
 
     fun handleLowerButtonPress() {
         randomCurrentCard()
-        val userGuessLower = checkGuessLower()
-        checkIncreaseScore(userGuessLower)
+        val checkGuess = checkGuessLower()
+        checkCorrectGuess(checkGuess)
         changeCurrentCardToPrevious()
     }
 
@@ -188,13 +180,13 @@ class GameActivity : AppCompatActivity() {
         previousCard = deck[10]
         imageViewPreviousCard.setImageResource(previousCard.image)
     }
-    fun randomCurrentCard () {
+
+    fun randomCurrentCard() {
         deck.shuffle()
-        currentCard = deck [20]
-        while(currentCard.value == previousCard.value) {
-            //if (currentCard.value == previousCard.value) { // funkar inte att undvika lika värde mellan två kort. Undersöka detta
-                deck.shuffle()
-                currentCard = deck[25]
+        currentCard = deck[20]
+        while (currentCard.value == previousCard.value) {
+            deck.shuffle()
+            currentCard = deck[25]
         }
         imageViewCurrentCard.setImageResource(currentCard.image)
     }
@@ -215,25 +207,24 @@ class GameActivity : AppCompatActivity() {
         return currentCard.value < previousCard.value
     }
 
-    fun wrongGuess() {
+    fun gameOver() {
         val intent = Intent(this, ResultActivity::class.java)
+        highscore = point
+        Log.d("!!!", "nuvarande rekorde är $highscore")
         Handler(Looper.getMainLooper()).postDelayed({
-            if (point > highscore!!) {
-                highscore = point
-            }
-            intent.putExtra("highscore", highscore)
+            intent.putExtra("sharedHighScore", highscore)
             intent.putExtra("point", point)
             startActivity(intent)
         }, 1500)
     }
 
-    fun checkIncreaseScore(correctGuess: Boolean) {
+    fun checkCorrectGuess(correctGuess: Boolean) {
         if (correctGuess) {
             point++
             pointTextView.text = getString(R.string.point_textview, point)
 
         } else {
-            wrongGuess()
+            gameOver()
         }
     }
 }

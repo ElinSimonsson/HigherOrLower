@@ -10,18 +10,21 @@ import android.widget.Button
 
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val playButton = findViewById<Button>(R.id.playButton)
+
         playButton.setOnClickListener {
             handleButtonPress()
         }
     }
+
     fun handleButtonPress() {
-        var intent = Intent(this, GameActivity::class.java)
+        val intent = Intent(this, GameActivity::class.java)
 
         startActivity(intent)
     }
-    
+}
