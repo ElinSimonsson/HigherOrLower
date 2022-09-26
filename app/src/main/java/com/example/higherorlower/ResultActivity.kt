@@ -1,19 +1,19 @@
 package com.example.higherorlower
 
-import android.app.Application
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.view.View
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
 import android.widget.ImageButton
 import android.widget.TextView
 
 class ResultActivity : AppCompatActivity() {
     lateinit var scoreTextView: TextView
     lateinit var highScoreTextView: TextView
-    lateinit var highScoreBrokenTextView: TextView
+    lateinit var highScoreSubHeadingTextView: TextView
     val sharedPrefFile = "kotlinsharedpreference"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,24 +21,42 @@ class ResultActivity : AppCompatActivity() {
         setContentView(R.layout.activity_result)
         scoreTextView = findViewById(R.id.scoreTextView)
         highScoreTextView = findViewById(R.id.highScoreTextView)
-        highScoreBrokenTextView = findViewById(R.id.highScoreBroken)
+        highScoreSubHeadingTextView = findViewById(R.id.highScoreSubHeadingTextView)
         val backImageButton = findViewById<ImageButton>(R.id.backImageButton)
 
+
         val point = getPoint()
-        val previousActivityHighScore = getPreviousHighscore()
+        val currentUserHighScore = getUserHighScore()
         val previousSharedHighScore = getPreviousSharedHighScore()
-        val currentHighScore = sharedHighScore(previousActivityHighScore)
+        val currentHighScore = sharedHighScore(currentUserHighScore)
 
         viewResult(point, currentHighScore)
         if (currentHighScore > previousSharedHighScore) {
-            highScoreBrokenTextView.text =
+            highScoreSubHeadingTextView.text =
                 getString(R.string.highScoreIsBroken_textView, "NEW HIGH SCORE!")
+            highScoreSubHeadingTextView.blink()
         } else {
-            highScoreBrokenTextView.text = getString(R.string.highScoreIsBroken_textView, " ")
+            highScoreSubHeadingTextView.text = getString(R.string.highScoreIsBroken_textView, " ")
         }
         backImageButton.setOnClickListener {
             finish()
         }
+    }
+
+    fun View.blink(
+        times: Int = Animation.INFINITE,
+        duration: Long = 80L,
+        offset: Long = 80L,
+        minAlpha: Float = 0.0f,
+        maxAlpha: Float = 1.0f,
+        repeatMode: Int = Animation.REVERSE
+    ) {
+        startAnimation(AlphaAnimation(minAlpha, maxAlpha).also {
+            it.duration = duration
+            it.startOffset = offset
+            it.repeatMode = repeatMode
+            it.repeatCount = times
+        })
     }
 
     fun viewResult(score: Int, highScore: Int) {
@@ -51,8 +69,8 @@ class ResultActivity : AppCompatActivity() {
         return point
     }
 
-    fun getPreviousHighscore(): Int {
-        val previousHighScore = intent.getIntExtra("sharedHighScore", 0)
+    fun getUserHighScore(): Int {
+        val previousHighScore = intent.getIntExtra("highScore", 0)
         return previousHighScore
     }
 

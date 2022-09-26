@@ -210,9 +210,8 @@ class GameActivity : AppCompatActivity() {
     fun gameOver() {
         val intent = Intent(this, ResultActivity::class.java)
         highscore = point
-        Log.d("!!!", "nuvarande rekorde är $highscore")
         Handler(Looper.getMainLooper()).postDelayed({
-            intent.putExtra("sharedHighScore", highscore)
+            intent.putExtra("highScore", highscore)
             intent.putExtra("point", point)
             startActivity(intent)
         }, 1500)
