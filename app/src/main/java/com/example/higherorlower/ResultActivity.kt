@@ -32,9 +32,9 @@ class ResultActivity : AppCompatActivity() {
         viewResult(point, currentHighScore)
         if (currentHighScore > previousSharedHighScore) {
             highScoreBrokenTextView.text =
-                getString(R.string.highScoreBroken_textView, "NEW HIGH SCORE!")
+                getString(R.string.highScoreIsBroken_textView, "NEW HIGH SCORE!")
         } else {
-            highScoreBrokenTextView.text = getString(R.string.highScoreBroken_textView, " ")
+            highScoreBrokenTextView.text = getString(R.string.highScoreIsBroken_textView, " ")
         }
         backImageButton.setOnClickListener {
             finish()
