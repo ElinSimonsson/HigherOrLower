@@ -9,6 +9,7 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.core.view.isInvisible
 
 class ResultActivity : AppCompatActivity() {
     lateinit var scoreTextView: TextView
@@ -25,18 +26,16 @@ class ResultActivity : AppCompatActivity() {
         val backImageButton = findViewById<ImageButton>(R.id.backImageButton)
 
 
-        val point = getPoint()
+        val score = getScore()
         val currentUserHighScore = getUserHighScore()
         val previousSharedHighScore = getPreviousSharedHighScore()
-        val currentHighScore = sharedHighScore(currentUserHighScore)
+        val currentHighScore = sharedHighScore(score) // kontrollera om det stämmer
 
-        viewResult(point, currentHighScore)
+        viewResult(score, currentHighScore)
         if (currentHighScore > previousSharedHighScore) {
-            highScoreSubHeadingTextView.text =
-                getString(R.string.highScoreIsBroken_textView, "NEW HIGH SCORE!")
             highScoreSubHeadingTextView.blink()
         } else {
-            highScoreSubHeadingTextView.text = getString(R.string.highScoreIsBroken_textView, " ")
+            highScoreSubHeadingTextView.alpha = 0.0f
         }
         backImageButton.setOnClickListener {
             finish()
@@ -61,10 +60,10 @@ class ResultActivity : AppCompatActivity() {
 
     fun viewResult(score: Int, highScore: Int) {
         scoreTextView.text = getString(R.string.resultScore_textview, score)
-        highScoreTextView.text = getString(R.string.highscore_textview, highScore)
+        highScoreTextView.text = getString(R.string.highScore_textview, highScore)
     }
 
-    fun getPoint(): Int {
+    fun getScore(): Int {
         val point = intent.getIntExtra("point", 0)
         return point
     }

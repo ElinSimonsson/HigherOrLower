@@ -1,19 +1,19 @@
 package com.example.higherorlower
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 
 class GameActivity : AppCompatActivity() {
+    lateinit var layout: ConstraintLayout
     lateinit var imageViewPreviousCard: ImageView
     lateinit var imageViewCurrentCard: ImageView
     lateinit var pointTextView: TextView
@@ -26,12 +26,13 @@ class GameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
-
+        layout = findViewById(R.id.layout)
         pointTextView = findViewById(R.id.pointTextView)
         imageViewCurrentCard = findViewById(R.id.imageViewSecretCard)
         imageViewPreviousCard = findViewById(R.id.imageViewOldCard)
         val lowerButton = findViewById<Button>(R.id.lowerButton)
         val higherButton = findViewById<Button>(R.id.higherButton)
+        layout.setBackgroundResource(R.drawable.greenbackground)
         createDeck()
 
         pointTextView.text = getString(R.string.point_textview, point)
@@ -209,18 +210,24 @@ class GameActivity : AppCompatActivity() {
 
     fun gameOver() {
         val intent = Intent(this, ResultActivity::class.java)
+        layout.setBackgroundColor(Color.RED)
         highscore = point
         Handler(Looper.getMainLooper()).postDelayed({
             intent.putExtra("highScore", highscore)
             intent.putExtra("point", point)
             startActivity(intent)
+            finish() // direkt till main från resultActivity
         }, 1500)
     }
 
     fun checkCorrectGuess(correctGuess: Boolean) {
         if (correctGuess) {
+            layout.setBackgroundColor(Color.GREEN)
             point++
             pointTextView.text = getString(R.string.point_textview, point)
+            Handler(Looper.getMainLooper()).postDelayed({
+                layout.setBackgroundResource(R.drawable.greenbackground)
+            },2000)
 
         } else {
             gameOver()

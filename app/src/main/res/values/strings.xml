@@ -1,12 +1,15 @@
 <resources>
     <string name="app_name">HigherOrLower</string>
-    <string name= "button_play">Play</string>
-    <string name= "button_higher">Higher</string>
-    <string name= "button_lower">Lower</string>
-    <string name= "point_textview">Point: %1$d</string>
-    <string name= "gameover_textview">Game over!</string>
-    <string name= "resultScore_textview">Your score: %1$d</string>
-    <string name= "highscore_textview">High score: %1$d</string>
-    <string name= "highScoreIsBroken_textView">%1$s</string>
-    <string name= "title_textview">Higher or Lower</string>
+    <string name="button_play">Play</string>
+    <string name="button_higher">Higher</string>
+    <string name="button_lower">Lower</string>
+    <string name="point_textview">Point: %1$d</string>
+    <string name="gameOver_textview">Game over!</string>
+    <string name="resultScore_textview">Your score: %1$d</string>
+    <string name="highScore_textview">High score: %1$d</string>
+    <string name="highScoreSubHeading_textView">NEW HIGH SCORE!</string>
+    <string name="title_textview">Higher or Lower</string>
+    <string name="rulesTitle_textview">Rules</string>
+    <string name="rules_TextView">Spelet går ut på att du ska försöka gissa rätt så många i
+        rad som möjligt, gissar du fel då är spelet över på en gång.</string>
 </resources>
