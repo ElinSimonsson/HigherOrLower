@@ -3,7 +3,8 @@
     <string name="button_play">Play</string>
     <string name="button_higher">Higher</string>
     <string name="button_lower">Lower</string>
-    <string name="point_textview">Point: %1$d</string>
+    <string name="button_menu">Menu</string>
+    <string name="point_textview">Score: %1$d</string>
     <string name="gameOver_textview">Game over!</string>
     <string name="resultScore_textview">Your score: %1$d</string>
     <string name="highScore_textview">High score: %1$d</string>
@@ -12,4 +13,5 @@
     <string name="rulesTitle_textview">Rules</string>
     <string name="rules_TextView">Spelet går ut på att du ska försöka gissa rätt så många i
         rad som möjligt, gissar du fel då är spelet över på en gång.</string>
+
 </resources>

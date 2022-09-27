@@ -20,8 +20,8 @@ class GameActivity : AppCompatActivity() {
     var point = 0
     var highscore = 0
     var deck = mutableListOf<Card>()
-    var previousCard = Card(R.drawable.diamondsace, 1)
-    var currentCard = Card(R.drawable.heartace, 1)
+    var previousCard: Card? = null
+    var currentCard: Card? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +44,7 @@ class GameActivity : AppCompatActivity() {
         lowerButton.setOnClickListener {
             handleLowerButtonPress()
         }
-        val imageButton = findViewById<ImageButton>(R.id.imageButton).setOnClickListener {
+        val imageView = findViewById<ImageView>(R.id.backImageView).setOnClickListener {
             finish()
         }
     }
@@ -179,33 +179,33 @@ class GameActivity : AppCompatActivity() {
     fun randomPreviousCard() {
         deck.shuffle()
         previousCard = deck[10]
-        imageViewPreviousCard.setImageResource(previousCard.image)
+        imageViewPreviousCard.setImageResource(previousCard!!.image)
     }
 
     fun randomCurrentCard() {
         deck.shuffle()
         currentCard = deck[20]
-        while (currentCard.value == previousCard.value) {
+        while (currentCard?.value == previousCard?.value) {
             deck.shuffle()
             currentCard = deck[25]
         }
-        imageViewCurrentCard.setImageResource(currentCard.image)
+        imageViewCurrentCard.setImageResource(currentCard!!.image)
     }
 
     fun changeCurrentCardToPrevious() {
         Handler(Looper.getMainLooper()).postDelayed({
             imageViewCurrentCard.setImageResource(R.drawable.cardback)
             previousCard = currentCard
-            imageViewPreviousCard.setImageResource(previousCard.image)
+            imageViewPreviousCard.setImageResource(previousCard!!.image)
         }, 2000)
     }
 
     fun checkGuessHigher(): Boolean {
-        return currentCard.value > previousCard.value
+        return currentCard!!.value > previousCard!!.value
     }
 
     fun checkGuessLower(): Boolean {
-        return currentCard.value < previousCard.value
+        return currentCard!!.value < previousCard!!.value
     }
 
     fun gameOver() {

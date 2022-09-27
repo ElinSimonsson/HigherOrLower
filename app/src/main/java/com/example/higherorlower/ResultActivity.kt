@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.view.isInvisible
@@ -23,7 +24,7 @@ class ResultActivity : AppCompatActivity() {
         scoreTextView = findViewById(R.id.scoreTextView)
         highScoreTextView = findViewById(R.id.highScoreTextView)
         highScoreSubHeadingTextView = findViewById(R.id.highScoreSubHeadingTextView)
-        val backImageButton = findViewById<ImageButton>(R.id.backImageButton)
+        val menuButton = findViewById<Button>(R.id.menuButton)
 
 
         val score = getScore()
@@ -37,7 +38,7 @@ class ResultActivity : AppCompatActivity() {
         } else {
             highScoreSubHeadingTextView.alpha = 0.0f
         }
-        backImageButton.setOnClickListener {
+        menuButton.setOnClickListener {
             finish()
         }
     }

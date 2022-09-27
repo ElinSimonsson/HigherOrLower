@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 
 
 class MainActivity : AppCompatActivity() {
@@ -17,12 +18,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val playButton = findViewById<Button>(R.id.playButton)
-        val questionMark = findViewById<ImageButton>(R.id.questionMarkImageButton)
+        val questionMarkView = findViewById<ImageView>(R.id.questionMarkImageView)
 
         playButton.setOnClickListener {
             handlePlayButtonPress()
         }
-        questionMark.setOnClickListener {
+        questionMarkView.setOnClickListener {
             handleQuestionImageButtonPress()
         }
     }

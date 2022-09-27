@@ -9,11 +9,11 @@
 
     <Button
         android:id="@+id/playButton"
-        android:layout_width="110dp"
-        android:layout_height="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="68dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="#43E30A"
         android:text="@string/button_play"
         android:textColor="#FFFFFF"
@@ -27,7 +27,7 @@
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="70dp"
         android:text="@string/title_textview"
         android:textColor="#FFFFFF"
         android:textSize="34sp"
@@ -36,15 +36,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/questionMarkImageButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+    <ImageView
+        android:id="@+id/questionMarkImageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:scaleType="centerInside"
+        app:layout_constraintHeight_percent="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/question" />
+        app:layout_constraintWidth_percent="0.10"
+        app:srcCompat="@drawable/question2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
