@@ -13,5 +13,12 @@
     <string name="rulesTitle_textview">Rules</string>
     <string name="rules_TextView">Spelet går ut på att du ska försöka gissa rätt så många i
         rad som möjligt, gissar du fel då är spelet över på en gång.</string>
+    <string name="easy_button">Easy</string>
+    <string name="medium_button">Medium</string>
+    <string name="hard_button">Hard</string>
+    <string name="messageDifficulty_textView">You chose: %1$s</string>
+    <string name="life_textView">%1$d lives left</string>
+    <string name="error_textView">You have to choose a level!</string>
+
 
 </resources>

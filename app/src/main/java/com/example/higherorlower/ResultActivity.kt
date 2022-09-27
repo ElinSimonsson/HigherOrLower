@@ -28,9 +28,9 @@ class ResultActivity : AppCompatActivity() {
 
 
         val score = getScore()
-        val currentUserHighScore = getUserHighScore()
+
         val previousSharedHighScore = getPreviousSharedHighScore()
-        val currentHighScore = sharedHighScore(score) // kontrollera om det stämmer
+        val currentHighScore = sharedHighScore(score)
 
         viewResult(score, currentHighScore)
         if (currentHighScore > previousSharedHighScore) {
@@ -67,11 +67,6 @@ class ResultActivity : AppCompatActivity() {
     fun getScore(): Int {
         val point = intent.getIntExtra("point", 0)
         return point
-    }
-
-    fun getUserHighScore(): Int {
-        val previousHighScore = intent.getIntExtra("highScore", 0)
-        return previousHighScore
     }
 
     fun sharedHighScore(highScorePreviousActivity: Int): Int {

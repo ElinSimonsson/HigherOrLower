@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -17,8 +18,10 @@ class GameActivity : AppCompatActivity() {
     lateinit var imageViewPreviousCard: ImageView
     lateinit var imageViewCurrentCard: ImageView
     lateinit var pointTextView: TextView
+    lateinit var lifeLeftTextView: TextView
+    var difficulty: String? = null
+    var life = 0
     var point = 0
-    var highscore = 0
     var deck = mutableListOf<Card>()
     var previousCard: Card? = null
     var currentCard: Card? = null
@@ -28,12 +31,17 @@ class GameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game)
         layout = findViewById(R.id.layout)
         pointTextView = findViewById(R.id.pointTextView)
+        lifeLeftTextView = findViewById(R.id.lifeTextView)
         imageViewCurrentCard = findViewById(R.id.imageViewSecretCard)
         imageViewPreviousCard = findViewById(R.id.imageViewOldCard)
         val lowerButton = findViewById<Button>(R.id.lowerButton)
         val higherButton = findViewById<Button>(R.id.higherButton)
         layout.setBackgroundResource(R.drawable.greenbackground)
+        difficulty = getDifficultyUser()
+
         createDeck()
+        createLive(difficulty!!)
+        lifeLeftTextView.text = getString(R.string.life_textView, life)
 
         pointTextView.text = getString(R.string.point_textview, point)
         randomPreviousCard()
@@ -210,10 +218,7 @@ class GameActivity : AppCompatActivity() {
 
     fun gameOver() {
         val intent = Intent(this, ResultActivity::class.java)
-        layout.setBackgroundColor(Color.RED)
-        highscore = point
         Handler(Looper.getMainLooper()).postDelayed({
-            intent.putExtra("highScore", highscore)
             intent.putExtra("point", point)
             startActivity(intent)
             finish() // direkt till main från resultActivity
@@ -230,7 +235,32 @@ class GameActivity : AppCompatActivity() {
             },2000)
 
         } else {
-            gameOver()
+            layout.setBackgroundColor(Color.RED)
+            if(life > 1) {
+                life--
+                lifeLeftTextView.text = getString(R.string.life_textView, life)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    layout.setBackgroundResource(R.drawable.greenbackground)
+                }, 2000)
+            }
+            else {
+                life--
+                lifeLeftTextView.text = getString(R.string.life_textView, life)
+                gameOver()
+            }
+        }
+    }
+
+    fun getDifficultyUser (): String? {
+        val answerDifficulty = intent.getStringExtra("difficulty")
+        return answerDifficulty
+    }
+
+    fun createLive (difficulty: String) {
+        when (difficulty) {
+            "Easy" -> life = 3
+            "Medium" -> life = 2
+            "Hard" -> life = 1
         }
     }
 }
