@@ -23,6 +23,7 @@ class GameActivity : AppCompatActivity() {
     var difficulty: String? = null
     var life = 0
     var point = 0
+
     //var deck = mutableListOf<Card>()
     var previousCard: Card? = null
     var currentCard: Card? = null
@@ -86,11 +87,16 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun randomCurrentCard() {
-        currentCard = deck.randomNewCard()
-        while (currentCard?.value == previousCard?.value) {
-           currentCard = deck.randomNewCard() // blanda igen
+        var shuffleAgain = true
+        while (shuffleAgain) {
+            currentCard = deck.randomNewCard()
+            if (currentCard?.value != previousCard?.value) {
+                if (deck.checkUsedDeck(currentCard!!)) {
+                    shuffleAgain = false
+                }
+            }
+            imageViewCurrentCard.setImageResource(currentCard!!.image)
         }
-        imageViewCurrentCard.setImageResource(currentCard!!.image)
     }
 
     fun changeCurrentCardToPrevious() {
@@ -125,18 +131,17 @@ class GameActivity : AppCompatActivity() {
             pointTextView.text = getString(R.string.point_textview, point)
             Handler(Looper.getMainLooper()).postDelayed({
                 layout.setBackgroundResource(R.drawable.greenbackground)
-            },2000)
+            }, 2000)
 
         } else {
             layout.setBackgroundColor(Color.RED)
-            if(life > 1) {
+            if (life > 1) {
                 life--
                 lifeLeftTextView.text = getString(R.string.life_textView, life)
                 Handler(Looper.getMainLooper()).postDelayed({
                     layout.setBackgroundResource(R.drawable.greenbackground)
                 }, 2000)
-            }
-            else {
+            } else {
                 life--
                 lifeLeftTextView.text = getString(R.string.life_textView, life)
                 gameOver()
@@ -144,14 +149,14 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    fun getDifficultyUser (): String? {
+    fun getDifficultyUser(): String? {
         val answerDifficulty = intent.getStringExtra("difficulty")
         return answerDifficulty
     }
 
-    fun createLive (difficulty: String) {
+    fun createLive(difficulty: String) {
         when (difficulty) {
-            "Easy" -> life = 3
+            "Easy" -> life = 55
             "Medium" -> life = 2
             "Hard" -> life = 1
         }

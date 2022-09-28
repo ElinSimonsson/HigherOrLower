@@ -1,20 +1,38 @@
 import com.example.higherorlower.Card
 import com.example.higherorlower.R
 
-class Deck () {
+class Deck() {
     private val deck = mutableListOf<Card>()
+    private val usedDeck = mutableListOf<Card>()
 
     init {
         createDeck()
     }
 
-    fun randomNewCard (): Card {
+    fun randomNewCard(): Card {
+        val card: Card?
         deck.shuffle()
-        return deck[10]
+        card = deck[10]
+        return card
     }
-    fun randomPreviousCard() : Card {
+
+    fun randomPreviousCard(): Card {
+        var card: Card?
         deck.shuffle()
-        return deck[20]
+        card = deck[8]
+        usedDeck.add(card)
+        return card
+    }
+
+    fun checkUsedDeck(card: Card): Boolean {
+        if (deck.size == usedDeck.size) {
+            usedDeck.clear()
+        }
+        if (card !in usedDeck) {
+            usedDeck.add(card)
+            return true
+        }
+        return false
     }
 
     fun createDeck() {
