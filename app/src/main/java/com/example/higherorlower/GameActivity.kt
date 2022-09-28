@@ -8,6 +8,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -16,36 +19,43 @@ import androidx.constraintlayout.widget.ConstraintLayout
 
 class GameActivity : AppCompatActivity() {
     lateinit var layout: ConstraintLayout
+    lateinit var lowerButton: Button
+    lateinit var higherButton: Button
     lateinit var imageViewPreviousCard: ImageView
     lateinit var imageViewCurrentCard: ImageView
+    lateinit var heartImageView1: ImageView
+    lateinit var heartImageView2: ImageView
+    lateinit var heartImageView3: ImageView
     lateinit var pointTextView: TextView
     lateinit var lifeLeftTextView: TextView
     var difficulty: String? = null
     var life = 0
     var point = 0
-
-    //var deck = mutableListOf<Card>()
     var previousCard: Card? = null
     var currentCard: Card? = null
     val deck = Deck()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
         layout = findViewById(R.id.layout)
         pointTextView = findViewById(R.id.pointTextView)
-        lifeLeftTextView = findViewById(R.id.lifeTextView)
+        // lifeLeftTextView = findViewById(R.id.lifeTextView)
         imageViewCurrentCard = findViewById(R.id.imageViewSecretCard)
         imageViewPreviousCard = findViewById(R.id.imageViewOldCard)
-        val lowerButton = findViewById<Button>(R.id.lowerButton)
-        val higherButton = findViewById<Button>(R.id.higherButton)
+        heartImageView1 = findViewById(R.id.heartImageView1)
+        heartImageView2 = findViewById(R.id.heartImageView2)
+        heartImageView3 = findViewById(R.id.heartImageView3)
+        lowerButton = findViewById(R.id.lowerButton)
+        higherButton = findViewById(R.id.higherButton)
         layout.setBackgroundResource(R.drawable.greenbackground)
         difficulty = getDifficultyUser()
 
-        //createDeck()
-        createLive(difficulty!!)
-        lifeLeftTextView.text = getString(R.string.life_textView, life)
+
+        life = createLive(difficulty!!)
+        createHearts(life)
+        Log.d("!!!", "Antal liv: $life")
+        // lifeLeftTextView.text = getString(R.string.life_textView, life)
 
         pointTextView.text = getString(R.string.point_textview, point)
         randomPreviousCard()
@@ -100,10 +110,14 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun changeCurrentCardToPrevious() {
+        higherButton.setOnClickListener(null)
+        lowerButton.setOnClickListener(null)
         Handler(Looper.getMainLooper()).postDelayed({
             imageViewCurrentCard.setImageResource(R.drawable.cardback)
             previousCard = currentCard
             imageViewPreviousCard.setImageResource(previousCard!!.image)
+            higherButton.setOnClickListener(View.OnClickListener { handleHigherButtonPress()})
+            lowerButton.setOnClickListener(View.OnClickListener { handleLowerButtonPress() })
         }, 2000)
     }
 
@@ -126,26 +140,31 @@ class GameActivity : AppCompatActivity() {
 
     fun checkCorrectGuess(correctGuess: Boolean) {
         if (correctGuess) {
-            layout.setBackgroundColor(Color.GREEN)
             point++
             pointTextView.text = getString(R.string.point_textview, point)
-            Handler(Looper.getMainLooper()).postDelayed({
-                layout.setBackgroundResource(R.drawable.greenbackground)
-            }, 2000)
-
         } else {
-            layout.setBackgroundColor(Color.RED)
-            if (life > 1) {
-                life--
-                lifeLeftTextView.text = getString(R.string.life_textView, life)
-                Handler(Looper.getMainLooper()).postDelayed({
-                    layout.setBackgroundResource(R.drawable.greenbackground)
-                }, 2000)
-            } else {
-                life--
-                lifeLeftTextView.text = getString(R.string.life_textView, life)
-                gameOver()
+            wrongGuess()
+        }
+    }
+
+    fun wrongGuess() {
+        if (life > 1) {
+            life--
+            when (life) {
+                2 -> {
+                    heartImageView3.blink(5)
+                    heartImageView3.visibility = View.INVISIBLE
+                }
+                1 -> {
+                    heartImageView2.blink(5)
+                    heartImageView2.visibility = View.INVISIBLE
+                }
             }
+        } else {
+            life--
+            heartImageView1.blink(5)
+            heartImageView1.visibility = View.INVISIBLE
+            gameOver()
         }
     }
 
@@ -154,12 +173,44 @@ class GameActivity : AppCompatActivity() {
         return answerDifficulty
     }
 
-    fun createLive(difficulty: String) {
+    fun createLive(difficulty: String): Int {
         when (difficulty) {
-            "Easy" -> life = 55
+            "Easy" -> life = 3
             "Medium" -> life = 2
             "Hard" -> life = 1
         }
+        return life
+    }
+
+    fun createHearts(lives: Int) {
+        when (lives) {
+            1 -> heartImageView1.visibility = View.VISIBLE
+            2 -> {
+                heartImageView1.visibility = View.VISIBLE
+                heartImageView2.visibility = View.VISIBLE
+            }
+            3 -> {
+                heartImageView1.visibility = View.VISIBLE
+                heartImageView2.visibility = View.VISIBLE
+                heartImageView3.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    fun View.blink(
+        times: Int = Animation.INFINITE,
+        duration: Long = 80L,
+        offset: Long = 80L,
+        minAlpha: Float = 0.0f,
+        maxAlpha: Float = 1.0f,
+        repeatMode: Int = Animation.REVERSE
+    ) {
+        startAnimation(AlphaAnimation(minAlpha, maxAlpha).also {
+            it.duration = duration
+            it.startOffset = offset
+            it.repeatMode = repeatMode
+            it.repeatCount = times
+        })
     }
 }
 

@@ -8,6 +8,28 @@
     android:background="@drawable/greenbackground"
     tools:context=".GameActivity">
 
+    <ImageView
+        android:id="@+id/heartImageView3"
+        android:layout_width="40dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@+id/heartImageView2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/heart" />
+
+    <ImageView
+        android:id="@+id/heartImageView2"
+        android:layout_width="40dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@+id/heartImageView1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/heart" />
+
     <TextView
         android:id="@+id/titleTextView2"
         android:layout_width="wrap_content"
@@ -95,17 +117,15 @@
         app:layout_constraintWidth_percent="0.15"
         app:srcCompat="@drawable/back" />
 
-    <TextView
-        android:id="@+id/lifeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/life_textView"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:typeface="serif"
+    <ImageView
+        android:id="@+id/heartImageView1"
+        android:layout_width="40dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/heart" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
