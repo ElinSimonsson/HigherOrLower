@@ -1,25 +1,23 @@
 package com.example.higherorlower
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.preference.PreferenceManager
-import android.util.Log
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 
 
 class MainActivity : AppCompatActivity() {
     var difficulty = " "
     lateinit var messageDifficulty: TextView
     lateinit var errorTextView: TextView
+    lateinit var heartImageViewFirst: ImageView
+    lateinit var heartImageViewSecond: ImageView
+    lateinit var heartImageViewThird: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +30,14 @@ class MainActivity : AppCompatActivity() {
         val questionMarkView = findViewById<ImageView>(R.id.questionMarkImageView)
         errorTextView = findViewById(R.id.errorTextView)
         messageDifficulty = findViewById(R.id.messageTextView)
+        heartImageViewFirst = findViewById(R.id.heartImageViewFirst)
+        heartImageViewSecond = findViewById(R.id.heartImageViewSecond)
+        heartImageViewThird = findViewById(R.id.heartImageViewThird)
        // messageDifficulty.visibility = View.GONE
 
-        easyButton.setOnClickListener {
+
+        easyButton.setOnClickListener { view ->
+            view.isSelected = true
             handleEasyButtonPress()
         }
         mediumButton.setOnClickListener {
@@ -51,6 +54,7 @@ class MainActivity : AppCompatActivity() {
             handleQuestionImageButtonPress()
         }
     }
+
 
     override fun onRestart() {
         super.onRestart()
@@ -76,18 +80,27 @@ class MainActivity : AppCompatActivity() {
     }
     fun handleEasyButtonPress() {
         difficulty = "Easy"
-        messageDifficulty.text = getString(R.string.messageDifficulty_textView, difficulty)
-        messageDifficulty.visibility = View.VISIBLE
+       // messageDifficulty.text = getString(R.string.messageDifficulty_textView, difficulty)
+       // messageDifficulty.visibility = View.VISIBLE
+        heartImageViewFirst.visibility = View.VISIBLE
+        heartImageViewSecond.visibility = View.VISIBLE
+        heartImageViewThird.visibility = View.VISIBLE
     }
     fun handleMediumButtonPress() {
         difficulty = "Medium"
         messageDifficulty.text = getString(R.string.messageDifficulty_textView, difficulty)
-        messageDifficulty.visibility = View.VISIBLE
+        //messageDifficulty.visibility = View.VISIBLE
+        heartImageViewFirst.visibility = View.VISIBLE
+        heartImageViewSecond.visibility = View.VISIBLE
+        heartImageViewThird.visibility = View.INVISIBLE
     }
     fun handleHardButtonPress() {
         difficulty = "Hard"
         messageDifficulty.text = getString(R.string.messageDifficulty_textView, difficulty)
-        messageDifficulty.visibility = View.VISIBLE
+       // messageDifficulty.visibility = View.VISIBLE
+        heartImageViewFirst.visibility = View.VISIBLE
+        heartImageViewSecond.visibility = View.INVISIBLE
+        heartImageViewThird.visibility = View.INVISIBLE
     }
     fun View.blink(
         times: Int = Animation.INFINITE,

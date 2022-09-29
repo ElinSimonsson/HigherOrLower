@@ -7,13 +7,45 @@
     android:background= "@drawable/greenbackground"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/heartImageViewThird"
+        android:layout_width="40dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toStartOf="@+id/heartImageViewSecond"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/heart" />
+
+    <ImageView
+        android:id="@+id/heartImageViewSecond"
+        android:layout_width="40dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toStartOf="@+id/heartImageViewFirst"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/heart" />
+
+    <ImageView
+        android:id="@+id/heartImageViewFirst"
+        android:layout_width="40dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/heart" />
+
     <Button
         android:id="@+id/playButton"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
         android:backgroundTint="#43E30A"
         android:text="@string/button_play"
         android:textAllCaps="true"
@@ -21,8 +53,10 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/errorTextView"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/titleTextView"
@@ -85,19 +119,19 @@
         android:id="@+id/messageTextView"
         android:layout_width="wrap_content"
         android:layout_height="21dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="250dp"
         android:text="@string/messageDifficulty_textView"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:typeface="serif"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/playButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleTextView"
-        app:layout_constraintVertical_bias="0.214" />
+        app:layout_constraintVertical_bias="0.122" />
 
     <TextView
         android:id="@+id/errorTextView"
@@ -109,11 +143,9 @@
         android:textColorHighlight="#DD2C00"
         android:textSize="20sp"
         android:typeface="serif"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/playButton"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hardButton"
-        app:layout_constraintVertical_bias="0.768" />
+        app:layout_constraintTop_toBottomOf="@+id/hardButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
