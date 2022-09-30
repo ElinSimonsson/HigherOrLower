@@ -1,7 +1,9 @@
 package com.example.higherorlower
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
@@ -12,34 +14,35 @@ import androidx.appcompat.app.AppCompatActivity
 
 
 class MainActivity : AppCompatActivity() {
-    var difficulty = " "
-    lateinit var messageDifficulty: TextView
     lateinit var errorTextView: TextView
     lateinit var heartImageViewFirst: ImageView
     lateinit var heartImageViewSecond: ImageView
     lateinit var heartImageViewThird: ImageView
+    lateinit var easyButton: Button
+    lateinit var mediumButton: Button
+    lateinit var hardButton: Button
+    var difficulty = " "
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val easyButton = findViewById<Button>(R.id.easyButton)
-        val mediumButton = findViewById<Button>(R.id.mediumButton)
-        val hardButton = findViewById<Button>(R.id.hardButton)
+        easyButton = findViewById(R.id.easyButton)
+        mediumButton = findViewById(R.id.mediumButton)
+        hardButton = findViewById(R.id.hardButton)
         val playButton = findViewById<Button>(R.id.playButton)
         val questionMarkView = findViewById<ImageView>(R.id.questionMarkImageView)
         errorTextView = findViewById(R.id.errorTextView)
-        messageDifficulty = findViewById(R.id.messageTextView)
         heartImageViewFirst = findViewById(R.id.heartImageViewFirst)
         heartImageViewSecond = findViewById(R.id.heartImageViewSecond)
         heartImageViewThird = findViewById(R.id.heartImageViewThird)
-       // messageDifficulty.visibility = View.GONE
 
+        //setButtonsColor()
 
-        easyButton.setOnClickListener { view ->
-            view.isSelected = true
+        easyButton.setOnClickListener{
             handleEasyButtonPress()
         }
+
         mediumButton.setOnClickListener {
             handleMediumButtonPress()
         }
@@ -55,12 +58,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onRestart() {
         super.onRestart()
         difficulty = " "
-        messageDifficulty.visibility = View.INVISIBLE
         errorTextView.visibility = View.INVISIBLE
+        setWhiteButtons()
+        setHeartsInvisible()
     }
 
     fun handlePlayButtonPress() {
@@ -80,27 +83,31 @@ class MainActivity : AppCompatActivity() {
     }
     fun handleEasyButtonPress() {
         difficulty = "Easy"
-       // messageDifficulty.text = getString(R.string.messageDifficulty_textView, difficulty)
-       // messageDifficulty.visibility = View.VISIBLE
         heartImageViewFirst.visibility = View.VISIBLE
         heartImageViewSecond.visibility = View.VISIBLE
         heartImageViewThird.visibility = View.VISIBLE
+        setEasyButtonToRed()
+        setWhiteMediumButton()
+        setWhiteHardButton()
     }
     fun handleMediumButtonPress() {
         difficulty = "Medium"
-        messageDifficulty.text = getString(R.string.messageDifficulty_textView, difficulty)
-        //messageDifficulty.visibility = View.VISIBLE
         heartImageViewFirst.visibility = View.VISIBLE
         heartImageViewSecond.visibility = View.VISIBLE
         heartImageViewThird.visibility = View.INVISIBLE
+        setWhiteEasyButton()
+        setMediumButtonToRed()
+        setWhiteHardButton()
+
     }
     fun handleHardButtonPress() {
         difficulty = "Hard"
-        messageDifficulty.text = getString(R.string.messageDifficulty_textView, difficulty)
-       // messageDifficulty.visibility = View.VISIBLE
         heartImageViewFirst.visibility = View.VISIBLE
         heartImageViewSecond.visibility = View.INVISIBLE
         heartImageViewThird.visibility = View.INVISIBLE
+        setWhiteEasyButton()
+        setWhiteMediumButton()
+        setHardButtonToRed()
     }
     fun View.blink(
         times: Int = Animation.INFINITE,
@@ -116,5 +123,43 @@ class MainActivity : AppCompatActivity() {
             it.repeatMode = repeatMode
             it.repeatCount = times
         })
+    }
+
+    fun setEasyButtonToRed () {
+        easyButton.setBackgroundColor(Color.parseColor("#D50000"))
+        easyButton.setTextColor(Color.WHITE)
+    }
+    fun setMediumButtonToRed () {
+        mediumButton.setBackgroundColor(Color.parseColor("#D50000"))
+        mediumButton.setTextColor(Color.WHITE)
+    }
+    fun setHardButtonToRed () {
+        hardButton.setBackgroundColor(Color.parseColor("#D50000"))
+        hardButton.setTextColor(Color.WHITE)
+    }
+    fun setWhiteEasyButton () {
+        easyButton.setTextColor(Color.parseColor("#D50000"))
+        easyButton.setBackgroundColor(Color.WHITE)
+    }
+    fun setWhiteMediumButton () {
+        mediumButton.setTextColor(Color.parseColor("#D50000"))
+        mediumButton.setBackgroundColor(Color.WHITE)
+    }
+    fun setWhiteHardButton () {
+        hardButton.setTextColor(Color.parseColor("#D50000"))
+        hardButton.setBackgroundColor(Color.WHITE)
+    }
+    fun setWhiteButtons() {
+        easyButton.setTextColor(Color.parseColor("#D50000"))
+        easyButton.setBackgroundColor(Color.WHITE)
+        mediumButton.setTextColor(Color.parseColor("#D50000"))
+        mediumButton.setBackgroundColor(Color.WHITE)
+        hardButton.setTextColor(Color.parseColor("#D50000"))
+        hardButton.setBackgroundColor(Color.WHITE)
+    }
+    fun setHeartsInvisible () {
+        heartImageViewFirst.visibility = View.INVISIBLE
+        heartImageViewSecond.visibility = View.INVISIBLE
+        heartImageViewThird.visibility = View.INVISIBLE
     }
 }

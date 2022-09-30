@@ -13,7 +13,7 @@
         android:layout_height="39dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintEnd_toStartOf="@+id/heartImageViewSecond"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/heart" />
@@ -24,7 +24,7 @@
         android:layout_height="39dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintEnd_toStartOf="@+id/heartImageViewFirst"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/heart" />
@@ -35,7 +35,7 @@
         android:layout_height="39dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/heart" />
@@ -87,19 +87,27 @@
         android:id="@+id/easyButton"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#0037FF"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="200dp"
+        android:backgroundTint="#FFFFFF"
         android:text="@string/easy_button"
+        android:textAllCaps="false"
+        android:textColor="#D50000"
+        android:typeface="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/messageTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+        app:layout_constraintVertical_bias="0.135" />
 
     <Button
         android:id="@+id/mediumButton"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#0037FF"
+        android:backgroundTint="#FFFFFF"
         android:text="@string/medium_button"
+        android:textColor="#D50000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/easyButton" />
@@ -108,30 +116,13 @@
         android:id="@+id/hardButton"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#0037FF"
+        android:backgroundTint="#FFFFFF"
         android:text="@string/hard_button"
+        android:textColor="#D50000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mediumButton" />
-
-    <TextView
-        android:id="@+id/messageTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="21dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="250dp"
-        android:text="@string/messageDifficulty_textView"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:typeface="serif"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
-        app:layout_constraintVertical_bias="0.122" />
 
     <TextView
         android:id="@+id/errorTextView"

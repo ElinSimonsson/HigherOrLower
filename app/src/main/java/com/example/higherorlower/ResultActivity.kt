@@ -8,15 +8,14 @@ import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.TextView
-import androidx.core.view.isInvisible
 
 class ResultActivity : AppCompatActivity() {
     lateinit var scoreTextView: TextView
     lateinit var highScoreTextView: TextView
     lateinit var highScoreSubHeadingTextView: TextView
     val sharedPrefFile = "kotlinsharedpreference"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +24,6 @@ class ResultActivity : AppCompatActivity() {
         highScoreTextView = findViewById(R.id.highScoreTextView)
         highScoreSubHeadingTextView = findViewById(R.id.highScoreSubHeadingTextView)
         val menuButton = findViewById<Button>(R.id.menuButton)
-
 
         val score = getScore()
 

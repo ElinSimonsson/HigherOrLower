@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/round_online.xml" value="0.237" />
+        <entry key="app/src/main/res/drawable/round_outline.xml" value="0.237" />
+        <entry key="app/src/main/res/drawable/rounded_image.xml" value="0.237" />
         <entry key="app/src/main/res/layout-v26/activity_result.xml" value="0.2477355072463768" />
         <entry key="app/src/main/res/layout/activity_game.xml" value="0.25490570068359375" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.29194946289062496" />
