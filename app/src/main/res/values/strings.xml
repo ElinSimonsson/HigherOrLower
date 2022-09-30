@@ -10,15 +10,21 @@
     <string name="highScore_textview">High score: %1$d</string>
     <string name="highScoreSubHeading_textView">NEW HIGH SCORE!</string>
     <string name="title_textview">Higher or Lower</string>
-    <string name="rulesTitle_textview">Rules</string>
-    <string name="rules_TextView">Spelet går ut på att du ska försöka gissa rätt så många i
-        rad som möjligt, gissar du fel då är spelet över på en gång.</string>
+    <string name="rulesTitle_textview">How to play?</string>
+    <string name="description1_TextView">It\'s easy to play. You will be shown two cards.
+        You simply have to decide whether the second card is searched for higher or lower than the first card.</string>
+    <string name="description2_textview">As you progress in the game, you will be shown a new card.
+        Select higher or lower to decide whether the second card is searched for more or less than the previous card.
+        The goal is to get the highest score by guessing correctly. If you get one wrong, you lose a life.
+        if you don\'t have any lives left, you lose the game.
+        There are three levels that have different number of lives</string>
+    <string name="descriptionLevels_textview">Easy = 3 lives\nMedium = 2 lives\nHard = 1 life</string>
     <string name="easy_button">Easy</string>
     <string name="medium_button">Medium</string>
     <string name="hard_button">Hard</string>
     <string name="messageDifficulty_textView">You chose: %1$s</string>
     <string name="life_textView">%1$d lives left</string>
-    <string name="error_textView">You have to choose a level!</string>
+    <string name="error_textView">You must select a level!</string>
 
 
 </resources>

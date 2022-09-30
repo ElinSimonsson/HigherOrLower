@@ -4,49 +4,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/greenbackground"
+    android:background="@drawable/darkgreenbackground"
     tools:context=".RulesActivity">
 
     <TextView
         android:id="@+id/rulesTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="16dp"
         android:text="@string/rulesTitle_textview"
         android:textColor="#FFFFFF"
         android:textSize="34sp"
         android:typeface="serif"
-        app:layout_constraintBottom_toTopOf="@+id/rulesTextView"
+        app:layout_constraintBottom_toTopOf="@+id/description1TextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.414" />
 
     <TextView
-        android:id="@+id/rulesTextView"
-        android:layout_width="221dp"
+        android:id="@+id/description1TextView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:text="@string/rules_TextView"
+        android:gravity="center_horizontal"
+        android:text="@string/description1_TextView"
         android:textColor="#FFFFFF"
-        android:textSize="20sp"
+        android:textSize="14sp"
         android:typeface="serif"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio=""
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.121" />
+        app:layout_constraintVertical_bias="0.299" />
 
     <ImageView
         android:id="@+id/backImageView1"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.05"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.15"
         app:srcCompat="@drawable/back" />
+
+    <TextView
+        android:id="@+id/description2TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center_horizontal"
+        android:text="@string/description2_textview"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:typeface="serif"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/description1TextView" />
+
+    <TextView
+        android:id="@+id/descriptionLevelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:layout_marginBottom="45dp"
+        android:gravity="center_horizontal"
+        android:text="@string/descriptionLevels_textview"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:typeface="serif"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/description2TextView"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

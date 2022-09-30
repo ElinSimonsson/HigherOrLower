@@ -1,5 +1,4 @@
-import com.example.higherorlower.Card
-import com.example.higherorlower.R
+package com.example.higherorlower
 
 class Deck() {
     private val deck = mutableListOf<Card>()
@@ -24,7 +23,7 @@ class Deck() {
         return card
     }
 
-    fun checkUsedDeck(card: Card): Boolean {
+    fun checkNotUsedDeck(card: Card): Boolean {
         if (deck.size == usedDeck.size) {
             usedDeck.clear()
         }

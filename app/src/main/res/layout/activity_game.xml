@@ -14,7 +14,6 @@
         android:layout_height="39dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
-
         android:visibility="invisible"
         app:layout_constraintEnd_toStartOf="@+id/heartImageView2"
         app:layout_constraintTop_toTopOf="parent"
@@ -48,51 +47,72 @@
         android:id="@+id/imageViewOldCard"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewSecretCard"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewFrontCard"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewBackCard"
         app:layout_constraintHeight_percent="0.36"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageViewSecretCard"
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView2"
+        app:layout_constraintVertical_bias="0.0"
         app:layout_constraintWidth_percent="0.4"
         app:srcCompat="@drawable/heartace" />
 
     <ImageView
-        android:id="@+id/imageViewSecretCard"
+        android:id="@+id/imageViewBackCard"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/lowerButton"
+        android:layout_marginEnd="36dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewOldCard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.36"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView2"
+        app:layout_constraintTop_toTopOf="@+id/imageViewOldCard"
+        app:layout_constraintVertical_bias="1.0"
         app:layout_constraintWidth_percent="0.4"
         app:srcCompat="@drawable/cardback" />
 
-    <Button
-        android:id="@+id/lowerButton"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="72dp"
-        android:backgroundTint="#00BCD4"
-        android:text="@string/button_lower"
+    <ImageView
+        android:id="@+id/imageViewFrontCard"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageViewSecretCard"
-        app:layout_constraintHorizontal_bias="0.523"
-        app:layout_constraintStart_toStartOf="@+id/imageViewSecretCard" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.36"
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView2"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintWidth_percent="0.4"
+        app:srcCompat="@drawable/heart2" />
 
     <Button
         android:id="@+id/higherButton"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="50dp"
         android:backgroundTint="#FF5722"
         android:text="@string/button_higher"
-        app:layout_constraintBottom_toBottomOf="@+id/lowerButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/imageViewOldCard"
-        app:layout_constraintStart_toStartOf="@+id/imageViewOldCard" />
+        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintStart_toStartOf="@+id/imageViewOldCard"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewOldCard"
+        app:layout_constraintVertical_bias="0.448" />
+
+    <Button
+        android:id="@+id/lowerButton"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#00B8D4"
+        android:text="@string/button_lower"
+        app:layout_constraintBottom_toBottomOf="@+id/higherButton"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewBackCard"
+        app:layout_constraintHorizontal_bias="0.553"
+        app:layout_constraintStart_toStartOf="@+id/imageViewBackCard" />
 
     <TextView
         android:id="@+id/pointTextView"

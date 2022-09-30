@@ -1,12 +1,17 @@
 package com.example.higherorlower
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.util.Property
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView

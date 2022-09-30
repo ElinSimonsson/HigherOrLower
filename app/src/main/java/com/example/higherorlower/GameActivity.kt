@@ -1,6 +1,7 @@
 package com.example.higherorlower
 
-import Deck
+import android.animation.AnimatorInflater
+import android.animation.AnimatorSet
 import android.content.Intent
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
@@ -8,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
@@ -23,17 +23,21 @@ class GameActivity : AppCompatActivity() {
     lateinit var lowerButton: Button
     lateinit var higherButton: Button
     lateinit var imageViewPreviousCard: ImageView
-    lateinit var imageViewCurrentCard: ImageView
+    lateinit var imageViewFrontCard: ImageView
+    lateinit var imageViewBackCard: ImageView
     lateinit var heartImageView1: ImageView
     lateinit var heartImageView2: ImageView
     lateinit var heartImageView3: ImageView
     lateinit var pointTextView: TextView
+    lateinit var front_anim: AnimatorSet
+    lateinit var back_anim: AnimatorSet
+    lateinit var roundedImage: Bitmap
     var difficulty: String? = null
     var life = 0
     var point = 0
     var previousCard: Card? = null
     var currentCard: Card? = null
-    lateinit var roundedImage: Bitmap
+
     val deck = Deck()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,29 +45,27 @@ class GameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game)
         layout = findViewById(R.id.layout)
         pointTextView = findViewById(R.id.pointTextView)
-        // lifeLeftTextView = findViewById(R.id.lifeTextView)
-        imageViewCurrentCard = findViewById(R.id.imageViewSecretCard)
+        imageViewFrontCard = findViewById<ImageView>(R.id.imageViewFrontCard) as ImageView
+        imageViewBackCard = findViewById<ImageView>(R.id.imageViewBackCard) as ImageView
         imageViewPreviousCard = findViewById(R.id.imageViewOldCard)
         heartImageView1 = findViewById(R.id.heartImageView1)
         heartImageView2 = findViewById(R.id.heartImageView2)
         heartImageView3 = findViewById(R.id.heartImageView3)
-        lowerButton = findViewById(R.id.lowerButton)
         higherButton = findViewById(R.id.higherButton)
-        layout.setBackgroundResource(R.drawable.greenbackground)
-        difficulty = getDifficultyUser()
+        lowerButton = findViewById(R.id.lowerButton)
 
-        showBackCard()
-        life = createLive(difficulty!!)
-        createHearts(life)
-        Log.d("!!!", "Antal liv: $life")
+        var scale = applicationContext.resources.displayMetrics.density
+        imageViewFrontCard.cameraDistance = 8000 * scale
+        imageViewBackCard.cameraDistance = 8000 * scale
 
-        pointTextView.text = getString(R.string.point_textview, point)
-        randomPreviousCard()
-        higherButton.setOnClickListener {
-            handleHigherButtonPress()
-        }
+        initializeGame()
+
         lowerButton.setOnClickListener {
             handleLowerButtonPress()
+
+        }
+        higherButton.setOnClickListener {
+            handleHigherButtonPress()
         }
         val imageView = findViewById<ImageView>(R.id.backImageView).setOnClickListener {
             finish()
@@ -74,6 +76,30 @@ class GameActivity : AppCompatActivity() {
         super.onRestart()
         point = 0
         pointTextView.text = getString(R.string.point_textview, 0)
+    }
+
+    fun handleHigherButtonPress() {
+        randomCurrentCard()
+        val checkGuess = checkGuessHigher()
+        checkCorrectGuess(checkGuess)
+        moveCurrentCardToPrevious()
+    }
+
+    fun handleLowerButtonPress() {
+        randomCurrentCard()
+        val checkGuess = checkGuessLower()
+        checkCorrectGuess(checkGuess)
+        moveCurrentCardToPrevious()
+    }
+
+    fun initializeGame () {
+        imageViewFrontCard.visibility = View.INVISIBLE
+        difficulty = getDifficultyUser()
+        showBackCard()
+        life = createLive(difficulty!!)
+        createHearts(life)
+        pointTextView.text = getString(R.string.point_textview, point)
+        randomPreviousCard()
     }
     fun roundedImage (image: Int): Bitmap {
         val bitmap = (AppCompatResources.getDrawable(this,image) as BitmapDrawable).bitmap
@@ -88,63 +114,49 @@ class GameActivity : AppCompatActivity() {
         return imageRounded
     }
 
-    fun handleHigherButtonPress() {
-        randomCurrentCard()
-        val checkGuess = checkGuessHigher()
-        checkCorrectGuess(checkGuess)
-        changeCurrentCardToPrevious()
-    }
-
-    fun handleLowerButtonPress() {
-        randomCurrentCard()
-        val checkGuess = checkGuessLower()
-        checkCorrectGuess(checkGuess)
-        changeCurrentCardToPrevious()
-    }
-
     fun randomPreviousCard() {
         previousCard = deck.randomPreviousCard()
         roundedImage = roundedImage(previousCard!!.image)
-        imageViewPreviousCard.setImageResource(previousCard!!.image)
         imageViewPreviousCard.setImageBitmap(roundedImage)
     }
 
     fun randomCurrentCard() {
+        imageViewFrontCard.visibility = View.VISIBLE
         var shuffleAgain = true
         while (shuffleAgain) {
             currentCard = deck.randomNewCard()
-
             if (currentCard?.value != previousCard?.value) {
-                if (deck.checkUsedDeck(currentCard!!)) {
+                if (deck.checkNotUsedDeck(currentCard!!)) {
                     shuffleAgain = false
                 }
             }
             roundedImage = roundedImage(currentCard!!.image)
-            imageViewCurrentCard.setImageResource(currentCard!!.image)
-            imageViewCurrentCard.setImageBitmap(roundedImage)
+            imageViewFrontCard.setImageBitmap(roundedImage)
+            flapToFrontCard()
         }
     }
 
     fun showBackCard () {
         roundedImage = roundedImage(R.drawable.cardback)
-        imageViewCurrentCard.setImageBitmap(roundedImage)
+        imageViewBackCard.setImageBitmap(roundedImage)
     }
 
-    fun changeCurrentCardToPrevious() {
+    fun moveCurrentCardToPrevious() {
         higherButton.setOnClickListener(null)
         lowerButton.setOnClickListener(null)
+
         Handler(Looper.getMainLooper()).postDelayed({
 
-            var roundedBackCardAsRounded = roundedImage(R.drawable.cardback)
-            imageViewCurrentCard.setImageBitmap(roundedBackCardAsRounded)
-
-            previousCard = currentCard
-            roundedImage = roundedImage(previousCard!!.image)
-            //imageViewPreviousCard.setImageResource(previousCard!!.image)
-            imageViewPreviousCard.setImageBitmap(roundedImage)
+            flapToBackCard()
+            Handler(Looper.getMainLooper()).postDelayed({
+                previousCard = currentCard
+                roundedImage = roundedImage(previousCard!!.image)
+                imageViewPreviousCard.setImageBitmap(roundedImage)
+            },300)
             higherButton.setOnClickListener(View.OnClickListener { handleHigherButtonPress()})
             lowerButton.setOnClickListener(View.OnClickListener { handleLowerButtonPress() })
         }, 2000)
+
     }
 
     fun checkGuessHigher(): Boolean {
@@ -165,12 +177,15 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun checkCorrectGuess(correctGuess: Boolean) {
-        if (correctGuess) {
-            point++
-            pointTextView.text = getString(R.string.point_textview, point)
-        } else {
-            wrongGuess()
-        }
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (correctGuess) {
+                point++
+                pointTextView.text = getString(R.string.point_textview, point)
+            }
+            else {
+                wrongGuess()
+            }
+        }, 500)
     }
 
     fun wrongGuess() {
@@ -237,6 +252,26 @@ class GameActivity : AppCompatActivity() {
             it.repeatMode = repeatMode
             it.repeatCount = times
         })
+    }
+
+    fun flapToBackCard () {
+        roundedImage = roundedImage(R.drawable.cardback)
+        imageViewBackCard.setImageBitmap(roundedImage)
+        front_anim = AnimatorInflater.loadAnimator(applicationContext, R.animator.front_animator) as AnimatorSet
+        back_anim = AnimatorInflater.loadAnimator(applicationContext, R.animator.back_animator) as AnimatorSet
+        front_anim.setTarget(imageViewFrontCard)
+        back_anim.setTarget(imageViewBackCard)
+        front_anim.start()
+        back_anim.start()
+    }
+
+    fun flapToFrontCard () {
+        front_anim = AnimatorInflater.loadAnimator(applicationContext, R.animator.front_animator) as AnimatorSet
+        back_anim = AnimatorInflater.loadAnimator(applicationContext, R.animator.back_animator) as AnimatorSet
+        front_anim.setTarget(imageViewBackCard)
+        back_anim.setTarget(imageViewFrontCard)
+        front_anim.start()
+        back_anim.start()
     }
 }
 

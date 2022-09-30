@@ -4,9 +4,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.TextView
 
@@ -30,8 +32,10 @@ class ResultActivity : AppCompatActivity() {
         val previousSharedHighScore = getPreviousSharedHighScore()
         val currentHighScore = sharedHighScore(score)
 
+
         viewResult(score, currentHighScore)
         if (currentHighScore > previousSharedHighScore) {
+//
             highScoreSubHeadingTextView.blink()
         } else {
             highScoreSubHeadingTextView.alpha = 0.0f
