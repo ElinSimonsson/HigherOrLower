@@ -35,11 +35,11 @@ class ResultActivity : AppCompatActivity() {
 
         viewResult(score, currentHighScore)
         if (currentHighScore > previousSharedHighScore) {
-//
             highScoreSubHeadingTextView.blink()
         } else {
             highScoreSubHeadingTextView.alpha = 0.0f
         }
+
         menuButton.setOnClickListener {
             finish()
         }

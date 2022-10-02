@@ -1,11 +1,14 @@
 package com.example.higherorlower
 
 import android.animation.ObjectAnimator
+import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.util.Property
+import android.view.ContextThemeWrapper
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -15,6 +18,8 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 
 
@@ -27,6 +32,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var mediumButton: Button
     lateinit var hardButton: Button
     var difficulty = " "
+    val positiveButtonClick = { dialog: DialogInterface, which: Int ->
+        Toast.makeText(applicationContext, "Ok", Toast.LENGTH_SHORT).show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         heartImageViewSecond = findViewById(R.id.heartImageViewSecond)
         heartImageViewThird = findViewById(R.id.heartImageViewThird)
 
-        //setButtonsColor()
+        setWhiteButtons()
 
         easyButton.setOnClickListener{
             handleEasyButtonPress()
@@ -59,7 +67,7 @@ class MainActivity : AppCompatActivity() {
             handlePlayButtonPress()
         }
         questionMarkView.setOnClickListener {
-            handleQuestionImageButtonPress()
+            instructionsAlertDialog(view = it)
         }
     }
 
@@ -70,6 +78,18 @@ class MainActivity : AppCompatActivity() {
         setWhiteButtons()
         setHeartsInvisible()
     }
+
+    fun instructionsAlertDialog (view: View) {
+        val alertDialog = android.app.AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogCustom)).create()
+
+        alertDialog.setTitle("How to play?")
+        alertDialog.setMessage(getString(R.string.instructions_textview))
+        alertDialog.setButton(
+            android.app.AlertDialog.BUTTON_POSITIVE, "Ok"
+        ) { dialog, which -> dialog.dismiss() }
+
+        alertDialog.show()
+        }
 
     fun handlePlayButtonPress() {
         if(difficulty == " ") {
@@ -82,10 +102,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun handleQuestionImageButtonPress () {
-        val intent = Intent(this, RulesActivity::class.java)
-        startActivity(intent)
-    }
     fun handleEasyButtonPress() {
         difficulty = "Easy"
         heartImageViewFirst.visibility = View.VISIBLE

@@ -8,23 +8,28 @@
     <string name="gameOver_textview">Game over!</string>
     <string name="resultScore_textview">Your score: %1$d</string>
     <string name="highScore_textview">High score: %1$d</string>
-    <string name="highScoreSubHeading_textView">NEW HIGH SCORE!</string>
+    <string name="highScoreSubHeading_textview">NEW HIGH SCORE!</string>
     <string name="title_textview">Higher or Lower</string>
     <string name="rulesTitle_textview">How to play?</string>
-    <string name="description1_TextView">It\'s easy to play. You will be shown two cards.
-        You simply have to decide whether the second card is searched for higher or lower than the first card.</string>
-    <string name="description2_textview">As you progress in the game, you will be shown a new card.
-        Select higher or lower to decide whether the second card is searched for more or less than the previous card.
-        The goal is to get the highest score by guessing correctly. If you get one wrong, you lose a life.
-        if you don\'t have any lives left, you lose the game.
-        There are three levels that have different number of lives</string>
-    <string name="descriptionLevels_textview">Easy = 3 lives\nMedium = 2 lives\nHard = 1 life</string>
+    <string name="instructions_textview">
+        \u2022 You will be shown two card\n
+        \u2022 Guess if the secret card is
+          higher or lower than the previous card.\n
+        \u2022 If you get one wrong, you lose a life\n
+        \u2022 If you don\'t have any life left, you lose the game.\n
+        \u2022 There is three levels who have different amount of lives.\n\n
+        \u2022 Easy have three lives\n
+        \u2022 Medium have two lives\n
+        \u2022 Hard have only one life.
+    </string>
     <string name="easy_button">Easy</string>
     <string name="medium_button">Medium</string>
     <string name="hard_button">Hard</string>
     <string name="messageDifficulty_textView">You chose: %1$s</string>
     <string name="life_textView">%1$d lives left</string>
     <string name="error_textView">You must select a level!</string>
-
+    <string name="descriptionContentQuestionMark_textview">
+        If the user do not understand how to play,
+        the user can press the question mark and read how to play</string>
 
 </resources>
