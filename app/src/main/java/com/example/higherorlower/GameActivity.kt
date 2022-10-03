@@ -33,7 +33,7 @@ class GameActivity : AppCompatActivity() {
     lateinit var back_anim: AnimatorSet
     lateinit var roundedCurrentCard: Bitmap
     lateinit var roundedPreviousCard: Bitmap
-    lateinit var roundedBackCard : Bitmap
+    lateinit var roundedBackCard: Bitmap
     var difficulty: String? = null
     var previousCard: Card? = null
     var currentCard: Card? = null
@@ -93,8 +93,8 @@ class GameActivity : AppCompatActivity() {
         moveCurrentCardToPrevious()
     }
 
-    fun initializeGame () {
-        imageViewFrontCard.visibility = View.INVISIBLE
+    fun initializeGame() {
+        //imageViewFrontCard.visibility = View.INVISIBLE
         difficulty = getDifficultyUser()
         showBackCard()
         life = createLive(difficulty!!)
@@ -102,8 +102,9 @@ class GameActivity : AppCompatActivity() {
         pointTextView.text = getString(R.string.point_textview, point)
         randomPreviousCard()
     }
-    fun roundedImage (image: Int): Bitmap {
-        val bitmap = (AppCompatResources.getDrawable(this,image) as BitmapDrawable).bitmap
+
+    fun roundedImage(image: Int): Bitmap {
+        val bitmap = (AppCompatResources.getDrawable(this, image) as BitmapDrawable).bitmap
         val imageRounded = Bitmap.createBitmap(bitmap.width, bitmap.height, bitmap.config)
         val canvas = Canvas(imageRounded)
         val paint = Paint()
@@ -111,7 +112,8 @@ class GameActivity : AppCompatActivity() {
         paint.shader = BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
         canvas.drawRoundRect(
             RectF(5F, 5F, bitmap.width.toFloat(), bitmap.height.toFloat()),
-            30F, 30F, paint)
+            30F, 30F, paint
+        )
         return imageRounded
     }
 
@@ -123,19 +125,11 @@ class GameActivity : AppCompatActivity() {
 
     fun randomCurrentCard() {
         imageViewFrontCard.visibility = View.VISIBLE
-        var shuffleAgain = true
-        while (shuffleAgain) {
-            currentCard = deck.randomNewCard()
-            if (currentCard?.value != previousCard?.value) {
-                if (deck.checkNotUsedDeck(currentCard!!)) {
-                    shuffleAgain = false
-                }
-            }
-            flapToFrontCard()
-        }
+        currentCard = deck.randomNewCard(previousCard!!)
+        flapToFrontCard()
     }
 
-    fun showBackCard () {
+    fun showBackCard() {
         roundedBackCard = roundedImage(R.drawable.cardback)
         imageViewBackCard.setImageBitmap(roundedBackCard)
     }
@@ -145,31 +139,28 @@ class GameActivity : AppCompatActivity() {
         lowerButton.setOnClickListener(null)
 
         Handler(Looper.getMainLooper()).postDelayed({
-
             flapToBackCard()
+
             Handler(Looper.getMainLooper()).postDelayed({
                 previousCard = currentCard
                 roundedPreviousCard = roundedImage(previousCard!!.image)
                 imageViewPreviousCard.setImageBitmap(roundedPreviousCard)
-            },300)
-            higherButton.setOnClickListener{ handleHigherButtonPress() }
-            lowerButton.setOnClickListener{ handleLowerButtonPress() }
+            }, 100)
+
+            higherButton.setOnClickListener { handleHigherButtonPress() }
+            lowerButton.setOnClickListener { handleLowerButtonPress() }
         }, 2000)
 
     }
 
 
-
     fun checkCorrectGuess(correctGuess: Boolean) {
-        Handler(Looper.getMainLooper()).postDelayed({
-            if (correctGuess) {
-                point++
-                pointTextView.text = getString(R.string.point_textview, point)
-            }
-            else {
-                wrongGuess()
-            }
-        }, 500)
+        if (correctGuess) {
+            point++
+            pointTextView.text = getString(R.string.point_textview, point)
+        } else {
+            wrongGuess()
+        }
     }
 
     fun wrongGuess() {
@@ -177,17 +168,17 @@ class GameActivity : AppCompatActivity() {
             life--
             when (life) {
                 2 -> {
-                    heartImageView3.blink(5)
+                    heartImageView3.blink(8)
                     heartImageView3.visibility = View.INVISIBLE
                 }
                 1 -> {
-                    heartImageView2.blink(5)
+                    heartImageView2.blink(8)
                     heartImageView2.visibility = View.INVISIBLE
                 }
             }
         } else {
             life--
-            heartImageView1.blink(5)
+            heartImageView1.blink(8)
             heartImageView1.visibility = View.INVISIBLE
             gameOver()
         }
@@ -255,22 +246,34 @@ class GameActivity : AppCompatActivity() {
         })
     }
 
-    fun flapToBackCard () {
+    fun flapToBackCard() {
         roundedBackCard = roundedImage(R.drawable.cardback)
         imageViewBackCard.setImageBitmap(roundedBackCard)
-        front_anim = AnimatorInflater.loadAnimator(applicationContext, R.animator.front_animator) as AnimatorSet
-        back_anim = AnimatorInflater.loadAnimator(applicationContext, R.animator.back_animator) as AnimatorSet
+        front_anim = AnimatorInflater.loadAnimator(
+            applicationContext,
+            R.animator.front_animator
+        ) as AnimatorSet
+        back_anim = AnimatorInflater.loadAnimator(
+            applicationContext,
+            R.animator.back_animator
+        ) as AnimatorSet
         front_anim.setTarget(imageViewFrontCard)
         back_anim.setTarget(imageViewBackCard)
         front_anim.start()
         back_anim.start()
     }
 
-    fun flapToFrontCard () {
+    fun flapToFrontCard() {
         roundedCurrentCard = roundedImage(currentCard!!.image)
         imageViewFrontCard.setImageBitmap(roundedCurrentCard)
-        front_anim = AnimatorInflater.loadAnimator(applicationContext, R.animator.front_animator) as AnimatorSet
-        back_anim = AnimatorInflater.loadAnimator(applicationContext, R.animator.back_animator) as AnimatorSet
+        front_anim = AnimatorInflater.loadAnimator(
+            applicationContext,
+            R.animator.front_animator
+        ) as AnimatorSet
+        back_anim = AnimatorInflater.loadAnimator(
+            applicationContext,
+            R.animator.back_animator
+        ) as AnimatorSet
         front_anim.setTarget(imageViewBackCard)
         back_anim.setTarget(imageViewFrontCard)
         front_anim.start()

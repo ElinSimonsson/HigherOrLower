@@ -8,10 +8,22 @@ class Deck() {
         createDeck()
     }
 
-    fun randomNewCard(): Card {
-        val card: Card?
-        deck.shuffle()
-        card = deck[10]
+    fun randomNewCard(previousCard: Card): Card? {
+        var card: Card? = null
+        var shuffleAgain = true
+        while(shuffleAgain) {
+            deck.shuffle()
+            card = deck[10]
+            if (deck.size == usedDeck.size) {
+                usedDeck.clear()
+            }
+            if(previousCard.value != card.value) {
+                if(card !in usedDeck) {
+                    usedDeck.add(card)
+                    shuffleAgain = false
+                }
+            }
+        }
         return card
     }
 
@@ -23,16 +35,16 @@ class Deck() {
         return card
     }
 
-    fun checkNotUsedDeck(card: Card): Boolean {
-        if (deck.size == usedDeck.size) {
-            usedDeck.clear()
-        }
-        if (card !in usedDeck) {
-            usedDeck.add(card)
-            return true
-        }
-        return false
-    }
+//    fun checkNotUsedDeck(card: Card): Boolean {
+//        if (deck.size == usedDeck.size) {
+//            usedDeck.clear()
+//        }
+//        if (card !in usedDeck) {
+//            usedDeck.add(card)
+//            return true
+//        }
+//        return false
+//    }
 
     fun createDeck() {
         val card1 = Card(R.drawable.heartace, 1)

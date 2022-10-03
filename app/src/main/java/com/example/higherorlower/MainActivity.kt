@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
     fun instructionsAlertDialog (view: View) {
         val alertDialog = android.app.AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogCustom)).create()
 
-        alertDialog.setTitle("How to play?")
+        alertDialog.setTitle(getString(R.string.alertDialogTitle_textview))
         alertDialog.setMessage(getString(R.string.instructions_textview))
         alertDialog.setButton(
             android.app.AlertDialog.BUTTON_POSITIVE, "Ok"

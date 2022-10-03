@@ -42,13 +42,13 @@
 
     <Button
         android:id="@+id/playButton"
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="50dp"
         android:backgroundTint="#43E30A"
-        android:text="@string/button_play"
+        android:text="@string/buttonPlay_text"
         android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="20sp"
@@ -88,12 +88,12 @@
 
     <Button
         android:id="@+id/easyButton"
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="150dp"
         android:backgroundTint="#FFFFFF"
-        android:text="@string/easy_button"
+        android:text="@string/buttonEasy_text"
         android:textColor="#D50000"
         android:typeface="normal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -106,10 +106,10 @@
 
     <Button
         android:id="@+id/mediumButton"
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#FFFFFF"
-        android:text="@string/medium_button"
+        android:text="@string/buttonMedium_text"
         android:textColor="#D50000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -117,10 +117,10 @@
 
     <Button
         android:id="@+id/hardButton"
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#FFFFFF"
-        android:text="@string/hard_button"
+        android:text="@string/buttonHard_text"
         android:textColor="#D50000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"

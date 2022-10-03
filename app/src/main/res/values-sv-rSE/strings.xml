@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HigherOrLower</string>
+    <string name="buttonPlay_text">Spela</string>
+    <string name="buttonHigher_text">Högre</string>
+    <string name="buttonLower_text">Lägre</string>
+    <string name="buttonMenu_text">Meny</string>
+    <string name="point_textview">Poäng: %1$d</string>
+    <string name="gameOver_textview">Spelet är över!</string>
+    <string name="resultScore_textview">Ditt poäng: %1$d</string>
+    <string name="highScore_textview">Rekord: %1$d</string>
+    <string name="highScoreSubHeading_textview">NYTT REKORD!</string>
+    <string name="title_textview">Högre eller lägre?</string>
+    <string name="alertDialogTitle_textview">Hur spelar man?</string>
+    <string name="instructions_textview">
+        \u2022 Du kommer att se två kort\n
+        \u2022 Gissa om det hemliga kort är
+        högre eller lägre än det tidigare kort\n
+        \u2022 Får du ett fel då förlorar du ett liv\n
+        \u2022 Har du inga liv kvar då är spelet över\n
+        \u2022 Det finns tre nivåer med olika antal liv.\n\n
+        \u2022 Nivån \"lätt\" har tre liv\n
+        \u2022 Nivån \"Mellan\" har två liv\n
+        \u2022 Nivån \"Svår\" har bara ett liv.
+    </string>
+    <string name="buttonEasy_text">Lätt</string>
+    <string name="buttonMedium_text">Mellan</string>
+    <string name="buttonHard_text">Svår</string>
+    <string name="error_textView">Du måste välja en nivå!</string>
+    <string name="descriptionContentQuestionMark_textview">
+        Om användaren inte förstår hur spelet fungerar då kan denne
+        trycka på questionMark och läsa instruktioner.
+    </string>
+</resources>
