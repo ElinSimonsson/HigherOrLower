@@ -4,11 +4,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.TextView
 
@@ -16,25 +14,22 @@ class ResultActivity : AppCompatActivity() {
     lateinit var scoreTextView: TextView
     lateinit var highScoreTextView: TextView
     lateinit var highScoreSubHeadingTextView: TextView
-    val sharedPrefFile = "kotlinsharedpreference"
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
-        scoreTextView = findViewById(R.id.scoreTextView)
-        highScoreTextView = findViewById(R.id.highScoreTextView)
+        scoreTextView = findViewById(R.id.scoreTextView2)
+        highScoreTextView = findViewById(R.id.highScoreTextView2)
         highScoreSubHeadingTextView = findViewById(R.id.highScoreSubHeadingTextView)
         val menuButton = findViewById<Button>(R.id.menuButton)
 
-        val score = getScore()
 
-        val previousSharedHighScore = getPreviousSharedHighScore()
-        val currentHighScore = sharedHighScore(score)
+        val score = intent.getIntExtra("point", 0)
+        val checkNewHighScore = intent.getBooleanExtra("checkHighScore", false)
+        val highScore = intent.getIntExtra("highScore", 0)
 
-
-        viewResult(score, currentHighScore)
-        if (currentHighScore > previousSharedHighScore) {
+        viewResult(score, highScore)
+        if (checkNewHighScore) {
             highScoreSubHeadingTextView.blink()
         } else {
             highScoreSubHeadingTextView.alpha = 0.0f
@@ -64,31 +59,5 @@ class ResultActivity : AppCompatActivity() {
     fun viewResult(score: Int, highScore: Int) {
         scoreTextView.text = getString(R.string.resultScore_textview, score)
         highScoreTextView.text = getString(R.string.highScore_textview, highScore)
-    }
-
-    fun getScore(): Int {
-        val point = intent.getIntExtra("point", 0)
-        return point
-    }
-
-    fun sharedHighScore(highScorePreviousActivity: Int): Int {
-        val sharedPreferences: SharedPreferences =
-            this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
-        val sharedHighScore = sharedPreferences.getInt("previousHighScore_key", 0)
-        if (highScorePreviousActivity > sharedHighScore) {
-            val editor: SharedPreferences.Editor = sharedPreferences.edit()
-            editor.putInt("previousHighScore_key", highScorePreviousActivity)
-            editor.apply()
-            val newHighScore = sharedPreferences.getInt("previousHighScore_key", 0)
-            return newHighScore
-        }
-        return sharedHighScore
-    }
-
-    fun getPreviousSharedHighScore(): Int {
-        val sharedPreferences: SharedPreferences =
-            this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
-        val previousSharedHighScore = sharedPreferences.getInt("previousHighScore_key", 0)
-        return previousSharedHighScore
     }
 }

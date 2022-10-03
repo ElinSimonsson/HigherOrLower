@@ -2,7 +2,9 @@ package com.example.higherorlower
 
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -28,24 +30,29 @@ class GameActivity : AppCompatActivity() {
     lateinit var heartImageView1: ImageView
     lateinit var heartImageView2: ImageView
     lateinit var heartImageView3: ImageView
-    lateinit var pointTextView: TextView
+    lateinit var scoreTextView: TextView
+    lateinit var highScoreTextView: TextView
     lateinit var front_anim: AnimatorSet
     lateinit var back_anim: AnimatorSet
     lateinit var roundedCurrentCard: Bitmap
     lateinit var roundedPreviousCard: Bitmap
     lateinit var roundedBackCard: Bitmap
+    val sharedPrefFile = "kotlinsharedpreference"
+    var currentHighscore = 0
+    var checkHighScore = false
     var difficulty: String? = null
     var previousCard: Card? = null
     var currentCard: Card? = null
     var life = 0
-    var point = 0
+    var score = 0
     val deck = Deck()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
         layout = findViewById(R.id.layout)
-        pointTextView = findViewById(R.id.pointTextView)
+        scoreTextView = findViewById(R.id.scoreTextView1)
+        highScoreTextView = findViewById(R.id.highScoreTextView1)
         imageViewFrontCard = findViewById(R.id.imageViewFrontCard)
         imageViewBackCard = findViewById(R.id.imageViewBackCard)
         imageViewPreviousCard = findViewById(R.id.imageViewOldCard)
@@ -75,8 +82,8 @@ class GameActivity : AppCompatActivity() {
 
     override fun onRestart() {
         super.onRestart()
-        point = 0
-        pointTextView.text = getString(R.string.point_textview, 0)
+        score = 0
+        scoreTextView.text = getString(R.string.point_textview, 0)
     }
 
     fun handleHigherButtonPress() {
@@ -94,13 +101,35 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun initializeGame() {
-        //imageViewFrontCard.visibility = View.INVISIBLE
         difficulty = getDifficultyUser()
         showBackCard()
         life = createLive(difficulty!!)
         createHearts(life)
-        pointTextView.text = getString(R.string.point_textview, point)
+        scoreTextView.text = getString(R.string.point_textview, score)
+        val previousHighScore = getPreviousSharedHighScore()
+        highScoreTextView.text = getString(R.string.highScore_textview, previousHighScore)
         randomPreviousCard()
+    }
+
+    fun sharedHighScore(): Int {
+        val sharedPreferences: SharedPreferences =
+            this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+        val sharedHighScore = sharedPreferences.getInt("highScore_key", 0)
+        if (score > sharedHighScore) {
+            checkHighScore = true
+            val editor: SharedPreferences.Editor = sharedPreferences.edit()
+            editor.putInt("highScore_key", score)
+            editor.apply()
+            val newHighScore = sharedPreferences.getInt("highScore_key", 0)
+            return newHighScore
+        }
+        return sharedHighScore
+    }
+    fun getPreviousSharedHighScore(): Int {
+        val sharedPreferences: SharedPreferences =
+            this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+        val previousSharedHighScore = sharedPreferences.getInt("highScore_key", 0)
+        return previousSharedHighScore
     }
 
     fun roundedImage(image: Int): Bitmap {
@@ -156,8 +185,8 @@ class GameActivity : AppCompatActivity() {
 
     fun checkCorrectGuess(correctGuess: Boolean) {
         if (correctGuess) {
-            point++
-            pointTextView.text = getString(R.string.point_textview, point)
+            score++
+            scoreTextView.text = getString(R.string.point_textview, score)
         } else {
             wrongGuess()
         }
@@ -180,6 +209,8 @@ class GameActivity : AppCompatActivity() {
             life--
             heartImageView1.blink(8)
             heartImageView1.visibility = View.INVISIBLE
+            currentHighscore = sharedHighScore()
+            //Log.d("!!!", "$newHighScore, $currentHighscore")
             gameOver()
         }
     }
@@ -187,7 +218,9 @@ class GameActivity : AppCompatActivity() {
     fun gameOver() {
         val intent = Intent(this, ResultActivity::class.java)
         Handler(Looper.getMainLooper()).postDelayed({
-            intent.putExtra("point", point)
+            intent.putExtra("point", score)
+            intent.putExtra("highScore", currentHighscore)
+            intent.putExtra("checkHighScore", checkHighScore)
             startActivity(intent)
             finish() // direkt till main från resultActivity
         }, 1500)

@@ -91,12 +91,15 @@
 
     <Button
         android:id="@+id/higherButton"
-        android:layout_width="100dp"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginBottom="50dp"
         android:backgroundTint="#FF5722"
         android:text="@string/buttonHigher_text"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/imageViewOldCard"
         app:layout_constraintHorizontal_bias="0.538"
@@ -106,24 +109,26 @@
 
     <Button
         android:id="@+id/lowerButton"
-        android:layout_width="100dp"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#00B8D4"
+        android:backgroundTint="#29B302"
         android:text="@string/buttonLower_text"
+        android:textAllCaps="false"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/higherButton"
         app:layout_constraintEnd_toEndOf="@+id/imageViewBackCard"
         app:layout_constraintHorizontal_bias="0.553"
         app:layout_constraintStart_toStartOf="@+id/imageViewBackCard" />
 
     <TextView
-        android:id="@+id/pointTextView"
+        android:id="@+id/scoreTextView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/point_textview"
         android:textColor="#FFFFFF"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:typeface="serif"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -149,5 +154,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/heart" />
+
+    <TextView
+        android:id="@+id/highScoreTextView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/highScore_textview"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:typeface="serif"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scoreTextView1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
