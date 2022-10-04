@@ -38,7 +38,7 @@ class GameActivity : AppCompatActivity() {
     lateinit var roundedPreviousCard: Bitmap
     lateinit var roundedBackCard: Bitmap
     val sharedPrefFile = "kotlinsharedpreference"
-    var currentHighscore = 0
+    var currentHighScore = 0
     var checkHighScore = false
     var difficulty: String? = null
     var previousCard: Card? = null
@@ -62,11 +62,8 @@ class GameActivity : AppCompatActivity() {
         higherButton = findViewById(R.id.higherButton)
         lowerButton = findViewById(R.id.lowerButton)
 
-        val scale = applicationContext.resources.displayMetrics.density
-        imageViewFrontCard.cameraDistance = 8000 * scale
-        imageViewBackCard.cameraDistance = 8000 * scale
 
-        initializeGame()
+        initializeLayoutGame()
 
         lowerButton.setOnClickListener {
             handleLowerButtonPress()
@@ -100,7 +97,7 @@ class GameActivity : AppCompatActivity() {
         moveCurrentCardToPrevious()
     }
 
-    fun initializeGame() {
+    fun initializeLayoutGame() {
         difficulty = getDifficultyUser()
         showBackCard()
         life = createLive(difficulty!!)
@@ -111,7 +108,7 @@ class GameActivity : AppCompatActivity() {
         randomPreviousCard()
     }
 
-    fun sharedHighScore(): Int {
+    fun getCurrentSharedHighScore(): Int {
         val sharedPreferences: SharedPreferences =
             this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
         val sharedHighScore = sharedPreferences.getInt("highScore_key", 0)
@@ -125,6 +122,7 @@ class GameActivity : AppCompatActivity() {
         }
         return sharedHighScore
     }
+
     fun getPreviousSharedHighScore(): Int {
         val sharedPreferences: SharedPreferences =
             this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
@@ -133,6 +131,9 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun roundedImage(image: Int): Bitmap {
+        val scale = applicationContext.resources.displayMetrics.density
+        imageViewFrontCard.cameraDistance = 8000 * scale
+        imageViewBackCard.cameraDistance = 8000 * scale
         val bitmap = (AppCompatResources.getDrawable(this, image) as BitmapDrawable).bitmap
         val imageRounded = Bitmap.createBitmap(bitmap.width, bitmap.height, bitmap.config)
         val canvas = Canvas(imageRounded)
@@ -182,17 +183,27 @@ class GameActivity : AppCompatActivity() {
 
     }
 
-
     fun checkCorrectGuess(correctGuess: Boolean) {
         if (correctGuess) {
             score++
             scoreTextView.text = getString(R.string.point_textview, score)
         } else {
-            wrongGuess()
+            reduceLife()
+            if (life < 1) {
+                currentHighScore = getCurrentSharedHighScore()
+                val intent = Intent(this, ResultActivity::class.java)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    intent.putExtra("point", score)
+                    intent.putExtra("highScore", currentHighScore)
+                    intent.putExtra("checkHighScore", checkHighScore)
+                    startActivity(intent)
+                    finish() // direkt till main från resultActivity
+                }, 1500)
+            }
         }
     }
 
-    fun wrongGuess() {
+    fun reduceLife() {
         if (life > 1) {
             life--
             when (life) {
@@ -209,21 +220,7 @@ class GameActivity : AppCompatActivity() {
             life--
             heartImageView1.blink(8)
             heartImageView1.visibility = View.INVISIBLE
-            currentHighscore = sharedHighScore()
-            //Log.d("!!!", "$newHighScore, $currentHighscore")
-            gameOver()
         }
-    }
-
-    fun gameOver() {
-        val intent = Intent(this, ResultActivity::class.java)
-        Handler(Looper.getMainLooper()).postDelayed({
-            intent.putExtra("point", score)
-            intent.putExtra("highScore", currentHighscore)
-            intent.putExtra("checkHighScore", checkHighScore)
-            startActivity(intent)
-            finish() // direkt till main från resultActivity
-        }, 1500)
     }
 
     fun checkGuessHigher(): Boolean {

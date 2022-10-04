@@ -7,21 +7,23 @@
     <string name="buttonMenu_text">Meny</string>
     <string name="point_textview">Poäng: %1$d</string>
     <string name="gameOver_textview">Spelet är över!</string>
-    <string name="resultScore_textview">Ditt poäng: %1$d</string>
+    <string name="resultScore_textview">\u2022 Ditt poäng: %1$d</string>
     <string name="highScore_textview">Rekord: %1$d</string>
+    <string name="resultHighScore_textview">\u2022 Rekord: %1$d</string>
     <string name="highScoreSubHeading_textview">NYTT REKORD!</string>
     <string name="title_textview">Högre eller lägre?</string>
     <string name="alertDialogTitle_textview">Hur spelar man?</string>
     <string name="instructions_textview">
-        \u2022 Du kommer att se två kort\n
+        \u2022 Du kommer att se två kort på skärmen.\n
         \u2022 Gissa om det hemliga kort är
-        högre eller lägre än det tidigare kort\n
-        \u2022 Får du ett fel då förlorar du ett liv\n
-        \u2022 Har du inga liv kvar då är spelet över\n
-        \u2022 Det finns tre nivåer med olika antal liv.\n\n
-        \u2022 Nivån \"lätt\" har tre liv\n
-        \u2022 Nivån \"Mellan\" har två liv\n
-        \u2022 Nivån \"Svår\" har bara ett liv.
+        högre eller lägre än det tidigare kortet.\n
+        \u2022 Får du ett fel då förlorar du ett liv.\n
+        \u2022 Har du inga liv kvar då är spelet över.\n
+        \u2022 Målet är att försöka slå rekordet genom att gissa rätt utan att förlora spelet.\n\n
+        \u2022 Det finns tre nivåer med olika antal liv.\n
+        \u2022 Nivån \"lätt\" har tre liv.\n
+        \u2022 Nivån \"mellan\" har två liv.\n
+        \u2022 Nivån \"svår\" har bara ett liv.
     </string>
     <string name="buttonEasy_text">Lätt</string>
     <string name="buttonMedium_text">Mellan</string>

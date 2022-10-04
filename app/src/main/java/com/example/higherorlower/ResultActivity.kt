@@ -58,6 +58,6 @@ class ResultActivity : AppCompatActivity() {
 
     fun viewResult(score: Int, highScore: Int) {
         scoreTextView.text = getString(R.string.resultScore_textview, score)
-        highScoreTextView.text = getString(R.string.highScore_textview, highScore)
+        highScoreTextView.text = getString(R.string.resultScore_textview, highScore)
     }
 }
