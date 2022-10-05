@@ -1,25 +1,16 @@
 package com.example.higherorlower
 
-import android.animation.ObjectAnimator
-import android.app.Dialog
-import android.content.DialogInterface
+
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
-import android.util.Property
 import android.view.ContextThemeWrapper
 import android.view.View
-import android.view.Window
-import android.view.WindowManager
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 
 
@@ -32,9 +23,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var mediumButton: Button
     lateinit var hardButton: Button
     var difficulty = " "
-    val positiveButtonClick = { dialog: DialogInterface, which: Int ->
-        Toast.makeText(applicationContext, "Ok", Toast.LENGTH_SHORT).show()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         heartImageViewSecond = findViewById(R.id.heartImageViewSecond)
         heartImageViewThird = findViewById(R.id.heartImageViewThird)
 
-        setWhiteButtons()
+      //  setWhiteButtons()
 
         easyButton.setOnClickListener {
             handleEasyButtonPress()
@@ -67,7 +55,7 @@ class MainActivity : AppCompatActivity() {
             handlePlayButtonPress()
         }
         questionMarkView.setOnClickListener {
-            instructionsAlertDialog(view = it)
+            instructionsAlertDialog()
         }
     }
 
@@ -79,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         setHeartsInvisible()
     }
 
-    fun instructionsAlertDialog(view: View) {
+    fun instructionsAlertDialog() {
         val alertDialog =
             android.app.AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogCustom))
                 .create()
@@ -109,7 +97,7 @@ class MainActivity : AppCompatActivity() {
         heartImageViewFirst.visibility = View.VISIBLE
         heartImageViewSecond.visibility = View.VISIBLE
         heartImageViewThird.visibility = View.VISIBLE
-        setEasyButtonToRed()
+        setEasyButtonToGreen()
         setWhiteMediumButton()
         setWhiteHardButton()
     }
@@ -120,7 +108,7 @@ class MainActivity : AppCompatActivity() {
         heartImageViewSecond.visibility = View.VISIBLE
         heartImageViewThird.visibility = View.INVISIBLE
         setWhiteEasyButton()
-        setMediumButtonToRed()
+        setMediumButtonToGreen()
         setWhiteHardButton()
 
     }
@@ -132,7 +120,7 @@ class MainActivity : AppCompatActivity() {
         heartImageViewThird.visibility = View.INVISIBLE
         setWhiteEasyButton()
         setWhiteMediumButton()
-        setHardButtonToRed()
+        setHardButtonToGreen()
     }
 
     fun View.blink(
@@ -151,42 +139,42 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun setEasyButtonToRed() {
-        easyButton.setBackgroundColor(Color.parseColor("#D50000"))
+    fun setEasyButtonToGreen() {
+        easyButton.setBackgroundColor(Color.parseColor("#006329"))
         easyButton.setTextColor(Color.WHITE)
     }
 
-    fun setMediumButtonToRed() {
-        mediumButton.setBackgroundColor(Color.parseColor("#D50000"))
+    fun setMediumButtonToGreen() {
+        mediumButton.setBackgroundColor(Color.parseColor("#006329"))
         mediumButton.setTextColor(Color.WHITE)
     }
 
-    fun setHardButtonToRed() {
-        hardButton.setBackgroundColor(Color.parseColor("#D50000"))
+    fun setHardButtonToGreen() {
+        hardButton.setBackgroundColor(Color.parseColor("#006329"))
         hardButton.setTextColor(Color.WHITE)
     }
 
     fun setWhiteEasyButton() {
-        easyButton.setTextColor(Color.parseColor("#D50000"))
+        easyButton.setTextColor(Color.parseColor("#006329"))
         easyButton.setBackgroundColor(Color.WHITE)
     }
 
     fun setWhiteMediumButton() {
-        mediumButton.setTextColor(Color.parseColor("#D50000"))
+        mediumButton.setTextColor(Color.parseColor("#006329"))
         mediumButton.setBackgroundColor(Color.WHITE)
     }
 
     fun setWhiteHardButton() {
-        hardButton.setTextColor(Color.parseColor("#D50000"))
+        hardButton.setTextColor(Color.parseColor("#006329"))
         hardButton.setBackgroundColor(Color.WHITE)
     }
 
     fun setWhiteButtons() {
-        easyButton.setTextColor(Color.parseColor("#D50000"))
+        easyButton.setTextColor(Color.parseColor("#006329"))
         easyButton.setBackgroundColor(Color.WHITE)
-        mediumButton.setTextColor(Color.parseColor("#D50000"))
+        mediumButton.setTextColor(Color.parseColor("#006329"))
         mediumButton.setBackgroundColor(Color.WHITE)
-        hardButton.setTextColor(Color.parseColor("#D50000"))
+        hardButton.setTextColor(Color.parseColor("#006329"))
         hardButton.setBackgroundColor(Color.WHITE)
     }
 

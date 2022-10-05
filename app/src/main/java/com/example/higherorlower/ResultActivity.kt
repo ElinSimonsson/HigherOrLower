@@ -1,7 +1,6 @@
 package com.example.higherorlower
 
-import android.content.Context
-import android.content.SharedPreferences
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -58,6 +57,6 @@ class ResultActivity : AppCompatActivity() {
 
     fun viewResult(score: Int, highScore: Int) {
         scoreTextView.text = getString(R.string.resultScore_textview, score)
-        highScoreTextView.text = getString(R.string.resultScore_textview, highScore)
+        highScoreTextView.text = getString(R.string.resultHighScore_textview, highScore)
     }
 }

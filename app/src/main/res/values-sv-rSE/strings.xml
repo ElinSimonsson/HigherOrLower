@@ -5,7 +5,7 @@
     <string name="buttonHigher_text">Högre</string>
     <string name="buttonLower_text">Lägre</string>
     <string name="buttonMenu_text">Meny</string>
-    <string name="point_textview">Poäng: %1$d</string>
+    <string name="score_textview">Poäng: %1$d</string>
     <string name="gameOver_textview">Spelet är över!</string>
     <string name="resultScore_textview">\u2022 Ditt poäng: %1$d</string>
     <string name="highScore_textview">Rekord: %1$d</string>

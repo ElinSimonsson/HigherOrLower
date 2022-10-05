@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
@@ -39,7 +40,7 @@ class GameActivity : AppCompatActivity() {
     lateinit var roundedBackCard: Bitmap
     val sharedPrefFile = "kotlinsharedpreference"
     var currentHighScore = 0
-    var checkHighScore = false
+    var checkNewHighScore = false
     var difficulty: String? = null
     var previousCard: Card? = null
     var currentCard: Card? = null
@@ -77,12 +78,6 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    override fun onRestart() {
-        super.onRestart()
-        score = 0
-        scoreTextView.text = getString(R.string.point_textview, 0)
-    }
-
     fun handleHigherButtonPress() {
         randomCurrentCard()
         val checkGuess = checkGuessHigher()
@@ -102,7 +97,7 @@ class GameActivity : AppCompatActivity() {
         showBackCard()
         life = createLive(difficulty!!)
         createHearts(life)
-        scoreTextView.text = getString(R.string.point_textview, score)
+        scoreTextView.text = getString(R.string.score_textview, score)
         val previousHighScore = getPreviousSharedHighScore()
         highScoreTextView.text = getString(R.string.highScore_textview, previousHighScore)
         randomPreviousCard()
@@ -113,7 +108,7 @@ class GameActivity : AppCompatActivity() {
             this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
         val sharedHighScore = sharedPreferences.getInt("highScore_key", 0)
         if (score > sharedHighScore) {
-            checkHighScore = true
+            checkNewHighScore = true
             val editor: SharedPreferences.Editor = sharedPreferences.edit()
             editor.putInt("highScore_key", score)
             editor.apply()
@@ -170,23 +165,26 @@ class GameActivity : AppCompatActivity() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             flapToBackCard()
-
-            Handler(Looper.getMainLooper()).postDelayed({
-                previousCard = currentCard
-                roundedPreviousCard = roundedImage(previousCard!!.image)
-                imageViewPreviousCard.setImageBitmap(roundedPreviousCard)
-            }, 100)
-
             higherButton.setOnClickListener { handleHigherButtonPress() }
             lowerButton.setOnClickListener { handleLowerButtonPress() }
         }, 2000)
+
+        //försena ytterligare 100 millisekunder så att funktionen
+        //flapToBackCard() körs färdigt innan previousCard byts
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            previousCard = currentCard
+            roundedPreviousCard = roundedImage(previousCard!!.image)
+            imageViewPreviousCard.setImageBitmap(roundedPreviousCard)
+        }, 2100)
+
 
     }
 
     fun checkCorrectGuess(correctGuess: Boolean) {
         if (correctGuess) {
             score++
-            scoreTextView.text = getString(R.string.point_textview, score)
+            scoreTextView.text = getString(R.string.score_textview, score)
         } else {
             reduceLife()
             if (life < 1) {
@@ -195,7 +193,7 @@ class GameActivity : AppCompatActivity() {
                 Handler(Looper.getMainLooper()).postDelayed({
                     intent.putExtra("point", score)
                     intent.putExtra("highScore", currentHighScore)
-                    intent.putExtra("checkHighScore", checkHighScore)
+                    intent.putExtra("checkHighScore", checkNewHighScore)
                     startActivity(intent)
                     finish() // direkt till main från resultActivity
                 }, 1500)

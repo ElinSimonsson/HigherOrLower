@@ -4,7 +4,7 @@
     <string name="buttonHigher_text">Higher</string>
     <string name="buttonLower_text">Lower</string>
     <string name="buttonMenu_text">Menu</string>
-    <string name="point_textview">Score: %1$d</string>
+    <string name="score_textview">Score: %1$d</string>
     <string name="gameOver_textview">Game over!</string>
     <string name="resultScore_textview">\u2022 Your score: %1$d</string>
     <string name="highScore_textview">High score: %1$d</string>

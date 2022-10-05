@@ -126,7 +126,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/point_textview"
+        android:text="@string/score_textview"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:typeface="serif"
