@@ -100,6 +100,26 @@ class GameActivity : AppCompatActivity() {
         randomPreviousCard()
     }
 
+    fun checkCorrectGuess(correctGuess: Boolean) {
+        if (correctGuess) {
+            score++
+            scoreTextView.text = getString(R.string.score_textview, score)
+        } else {
+            reduceLife()
+            if (life < 1) {
+                currentHighScore = getCurrentSharedHighScore()
+                val intent = Intent(this, ResultActivity::class.java)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    intent.putExtra("point", score)
+                    intent.putExtra("highScore", currentHighScore)
+                    intent.putExtra("checkHighScore", checkNewHighScore)
+                    startActivity(intent)
+                    finish() // direkt till main från resultActivity
+                }, 1500)
+            }
+        }
+    }
+
     fun getCurrentSharedHighScore(): Int {
         val sharedPreferences: SharedPreferences =
             this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
@@ -120,23 +140,6 @@ class GameActivity : AppCompatActivity() {
             this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
         val previousSharedHighScore = sharedPreferences.getInt("highScore_key", 0)
         return previousSharedHighScore
-    }
-
-    fun roundedImage(image: Int): Bitmap {
-        val scale = applicationContext.resources.displayMetrics.density
-        imageViewFrontCard.cameraDistance = 8000 * scale
-        imageViewBackCard.cameraDistance = 8000 * scale
-        val bitmap = (AppCompatResources.getDrawable(this, image) as BitmapDrawable).bitmap
-        val imageRounded = Bitmap.createBitmap(bitmap.width, bitmap.height, bitmap.config)
-        val canvas = Canvas(imageRounded)
-        val paint = Paint()
-        paint.isAntiAlias = true
-        paint.shader = BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
-        canvas.drawRoundRect(
-            RectF(5F, 5F, bitmap.width.toFloat(), bitmap.height.toFloat()),
-            30F, 30F, paint
-        )
-        return imageRounded
     }
 
     fun randomPreviousCard() {
@@ -162,38 +165,18 @@ class GameActivity : AppCompatActivity() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             flapToBackCard()
-            higherButton.setOnClickListener { handleHigherButtonPress() }
-            lowerButton.setOnClickListener { handleLowerButtonPress() }
         }, 2000)
 
         //försena ytterligare 100 millisekunder så att funktionen
-        //flapToBackCard() körs färdigt innan previousCard byts
+        //flapToBackCard() hinner köras färdigt innan previousCard byter kort
 
         Handler(Looper.getMainLooper()).postDelayed({
+            higherButton.setOnClickListener { handleHigherButtonPress() }
+            lowerButton.setOnClickListener { handleLowerButtonPress() }
             previousCard = currentCard
             roundedPreviousCard = roundedImage(previousCard!!.image)
             imageViewPreviousCard.setImageBitmap(roundedPreviousCard)
         }, 2100)
-    }
-
-    fun checkCorrectGuess(correctGuess: Boolean) {
-        if (correctGuess) {
-            score++
-            scoreTextView.text = getString(R.string.score_textview, score)
-        } else {
-            reduceLife()
-            if (life < 1) {
-                currentHighScore = getCurrentSharedHighScore()
-                val intent = Intent(this, ResultActivity::class.java)
-                Handler(Looper.getMainLooper()).postDelayed({
-                    intent.putExtra("point", score)
-                    intent.putExtra("highScore", currentHighScore)
-                    intent.putExtra("checkHighScore", checkNewHighScore)
-                    startActivity(intent)
-                    finish() // direkt till main från resultActivity
-                }, 1500)
-            }
-        }
     }
 
     fun reduceLife() {
@@ -253,6 +236,23 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
+    fun roundedImage(image: Int): Bitmap {
+        val scale = applicationContext.resources.displayMetrics.density
+        imageViewFrontCard.cameraDistance = 8000 * scale
+        imageViewBackCard.cameraDistance = 8000 * scale
+        val bitmap = (AppCompatResources.getDrawable(this, image) as BitmapDrawable).bitmap
+        val imageRounded = Bitmap.createBitmap(bitmap.width, bitmap.height, bitmap.config)
+        val canvas = Canvas(imageRounded)
+        val paint = Paint()
+        paint.isAntiAlias = true
+        paint.shader = BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
+        canvas.drawRoundRect(
+            RectF(5F, 5F, bitmap.width.toFloat(), bitmap.height.toFloat()),
+            30F, 30F, paint
+        )
+        return imageRounded
+    }
+
     fun View.blink(
         times: Int = Animation.INFINITE,
         duration: Long = 80L,
@@ -303,4 +303,3 @@ class GameActivity : AppCompatActivity() {
         back_anim.start()
     }
 }
-
