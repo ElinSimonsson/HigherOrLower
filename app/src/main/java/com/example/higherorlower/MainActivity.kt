@@ -28,17 +28,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val playButton = findViewById<Button>(R.id.playButton)
+        val questionMarkView = findViewById<ImageView>(R.id.questionMarkImageView)
         easyButton = findViewById(R.id.easyButton)
         mediumButton = findViewById(R.id.mediumButton)
         hardButton = findViewById(R.id.hardButton)
-        val playButton = findViewById<Button>(R.id.playButton)
-        val questionMarkView = findViewById<ImageView>(R.id.questionMarkImageView)
         errorTextView = findViewById(R.id.errorTextView)
         heartImageViewFirst = findViewById(R.id.heartImageViewFirst)
         heartImageViewSecond = findViewById(R.id.heartImageViewSecond)
         heartImageViewThird = findViewById(R.id.heartImageViewThird)
 
-      //  setWhiteButtons()
 
         easyButton.setOnClickListener {
             handleEasyButtonPress()
@@ -63,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         super.onRestart()
         difficulty = " "
         errorTextView.visibility = View.INVISIBLE
-        setWhiteButtons()
+        setLevelsButtonsToWhite()
         setHeartsInvisible()
     }
 
@@ -71,7 +70,6 @@ class MainActivity : AppCompatActivity() {
         val alertDialog =
             android.app.AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogCustom))
                 .create()
-
         alertDialog.setTitle(getString(R.string.alertDialogTitle_textview))
         alertDialog.setMessage(getString(R.string.instructions_textview))
         alertDialog.setButton(
@@ -98,8 +96,8 @@ class MainActivity : AppCompatActivity() {
         heartImageViewSecond.visibility = View.VISIBLE
         heartImageViewThird.visibility = View.VISIBLE
         setEasyButtonToGreen()
-        setWhiteMediumButton()
-        setWhiteHardButton()
+        setMediumButtonToWhite()
+        setHardButtonToWhite()
     }
 
     fun handleMediumButtonPress() {
@@ -107,9 +105,9 @@ class MainActivity : AppCompatActivity() {
         heartImageViewFirst.visibility = View.VISIBLE
         heartImageViewSecond.visibility = View.VISIBLE
         heartImageViewThird.visibility = View.INVISIBLE
-        setWhiteEasyButton()
+        setEasyButtonToWhite()
         setMediumButtonToGreen()
-        setWhiteHardButton()
+        setHardButtonToWhite()
 
     }
 
@@ -118,8 +116,8 @@ class MainActivity : AppCompatActivity() {
         heartImageViewFirst.visibility = View.VISIBLE
         heartImageViewSecond.visibility = View.INVISIBLE
         heartImageViewThird.visibility = View.INVISIBLE
-        setWhiteEasyButton()
-        setWhiteMediumButton()
+        setEasyButtonToWhite()
+        setMediumButtonToWhite()
         setHardButtonToGreen()
     }
 
@@ -154,22 +152,22 @@ class MainActivity : AppCompatActivity() {
         hardButton.setTextColor(Color.WHITE)
     }
 
-    fun setWhiteEasyButton() {
+    fun setEasyButtonToWhite() {
         easyButton.setTextColor(Color.parseColor("#006329"))
         easyButton.setBackgroundColor(Color.WHITE)
     }
 
-    fun setWhiteMediumButton() {
+    fun setMediumButtonToWhite() {
         mediumButton.setTextColor(Color.parseColor("#006329"))
         mediumButton.setBackgroundColor(Color.WHITE)
     }
 
-    fun setWhiteHardButton() {
+    fun setHardButtonToWhite() {
         hardButton.setTextColor(Color.parseColor("#006329"))
         hardButton.setBackgroundColor(Color.WHITE)
     }
 
-    fun setWhiteButtons() {
+    fun setLevelsButtonsToWhite() {
         easyButton.setTextColor(Color.parseColor("#006329"))
         easyButton.setBackgroundColor(Color.WHITE)
         mediumButton.setTextColor(Color.parseColor("#006329"))

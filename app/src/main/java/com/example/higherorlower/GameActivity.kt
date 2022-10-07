@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
@@ -19,10 +18,9 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.constraintlayout.widget.ConstraintLayout
+
 
 class GameActivity : AppCompatActivity() {
-    lateinit var layout: ConstraintLayout
     lateinit var lowerButton: Button
     lateinit var higherButton: Button
     lateinit var imageViewPreviousCard: ImageView
@@ -51,7 +49,6 @@ class GameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
-        layout = findViewById(R.id.layout)
         scoreTextView = findViewById(R.id.scoreTextView1)
         highScoreTextView = findViewById(R.id.highScoreTextView1)
         imageViewFrontCard = findViewById(R.id.imageViewFrontCard)
@@ -177,8 +174,6 @@ class GameActivity : AppCompatActivity() {
             roundedPreviousCard = roundedImage(previousCard!!.image)
             imageViewPreviousCard.setImageBitmap(roundedPreviousCard)
         }, 2100)
-
-
     }
 
     fun checkCorrectGuess(correctGuess: Boolean) {
